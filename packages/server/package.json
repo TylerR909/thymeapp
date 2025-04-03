@@ -1,0 +1,13 @@
+{
+    "name": "@thymeapp/server",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "dev": "bun --hot src/index.ts",
+      "build": "bun build src/index.ts --outdir dist"
+    },
+    "dependencies": {
+      "@thymeapp/types": "workspace:*",
+      "elysia": "^1.0.0"
+    }
+  }

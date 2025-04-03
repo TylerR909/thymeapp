@@ -1,0 +1,19 @@
+{
+    "name": "@thymeapp/web",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "dev": "bun vite",
+      "build": "bun vite build"
+    },
+    "dependencies": {
+      "@thymeapp/core": "workspace:*",
+      "@thymeapp/types": "workspace:*",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+      "vite": "^5.2.0",
+      "@vitejs/plugin-react": "^4.2.0"
+    }
+  }
