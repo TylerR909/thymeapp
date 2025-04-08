@@ -13,6 +13,7 @@
       ]
     }
   },
+  "forwardPorts": [8081],
   "postCreateCommand": "npm i -g bun && bun install",
   "remoteUser": "node"
 }
