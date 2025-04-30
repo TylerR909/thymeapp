@@ -2,7 +2,8 @@
   "name": "thymeapp-dev",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:22",
   "mounts": [
-    "source=${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached,readonly"
+    // "source=${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached,readonly"
+    "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached,readonly"
   ],
   "customizations": {
     "vscode": {
