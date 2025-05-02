@@ -1,9 +1,8 @@
 {
-    "name": "@thymeapp/core",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-      "@thymeapp/types": "workspace:*",
-      "react": "^18.2.0"
-    }
+  "name": "@thymeapp/core",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@thymeapp/types": "workspace:*"
   }
+}

@@ -1,5 +1,7 @@
 {
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "name": "thymeapp",
   "type": "module",
   "private": true,
