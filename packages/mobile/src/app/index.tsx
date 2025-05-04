@@ -1,5 +1,5 @@
+import { GeoProvider } from "@mobile/services/GeoLocation/GeoProvider";
 import { Text, View } from "react-native";
-import { GeoProvider } from "./_services/GeoLocation/GeoProvider";
 
 export default function Index() {
   return (
