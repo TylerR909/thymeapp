@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { View, Text, Button } from "react-native";
 import { useToggle } from "@mobile/utils/hooks/useToggle";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { count } from "drizzle-orm";
+import { db, ping } from "@mobile/services/db";
 
 /**
  * For the most part Geo Services run in the background and update the database with time-series
@@ -33,8 +36,18 @@ export const GeoProvider = ({ children }: React.PropsWithChildren<unknown>) => {
       setGeoLoc(location);
       const postal = await Location.reverseGeocodeAsync(location.coords);
       setPostal(postal);
+
+      await db.insert(ping).values({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        accuracy: location.coords.accuracy!,
+        altitude: location.coords.altitude!,
+        speed: location.coords.speed!,
+      });
     })();
   }, [t]);
+
+  const numPings = useLiveQuery(db.select({ count: count() }).from(ping));
 
   const { coords, timestamp } = geoLoc ?? {};
   return (
@@ -44,10 +57,13 @@ export const GeoProvider = ({ children }: React.PropsWithChildren<unknown>) => {
         {!geoLoc ? (
           <Text>Test Component!</Text>
         ) : (
-          <Text>
-            Location at {new Date(timestamp!).toLocaleTimeString()} was{" "}
-            {coords?.latitude} {coords?.longitude} ({coords?.accuracy})
-          </Text>
+          <>
+            <Text>{numPings.data[0]?.count} total pings</Text>
+            <Text>
+              Location at {new Date(timestamp!).toLocaleTimeString()} was{" "}
+              {coords?.latitude} {coords?.longitude} ({coords?.accuracy})
+            </Text>
+          </>
         )}
         <Button title="Refetch" onPress={toggle} />
       </View>

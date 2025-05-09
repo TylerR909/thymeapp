@@ -10,7 +10,8 @@
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "oven.bun-vscode"
+        "oven.bun-vscode",
+        "EditorConfig.EditorConfig"
       ]
     }
   },
