@@ -26,7 +26,11 @@
     "noPropertyAccessFromIndexSignature": false,
 
     "paths": {
-      "@thymeapp/*": ["./packages/*/src"]
+      "@mobile/*": ["./packages/mobile/src/*"],
+      "@core/*": ["./packages/core/src/*"],
+      "@server/*": ["./packages/server/src/*"],
+      "@types/*": ["./packages/types/src/*"],
+      "@web/*": ["./packages/web/src/*"]
     }
   }
 }

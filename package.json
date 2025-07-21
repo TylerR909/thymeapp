@@ -5,8 +5,28 @@
   "name": "thymeapp",
   "type": "module",
   "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "prepare": "husky"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@eslint/js": "^9.31.0",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@types/bun": "latest",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "typescript-eslint": "^8.37.0"
   },
   "peerDependencies": {
     "typescript": "^5"

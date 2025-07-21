@@ -1,3 +1,14 @@
 {
-    "remote.localPortHost": "allInterfaces"
+  "remote.localPortHost": "allInterfaces", // Required for Expo development
+  "eslint.enable": true, // Force ESLint plugin on (maybe not required)
+  "eslint.format.enable": true, // Enable ESLint plugin as a Formatter in VSCode
+  // Everyone lints to the same standard
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  "[typescript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  "[javascriptreact]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  "[typescriptreact]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+  // Candidates for User-Settings but until I'm not the only dev we can bundle it into the workspace
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+  "editor.formatOnSave": true
 }

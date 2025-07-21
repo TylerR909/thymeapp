@@ -1,1 +1,1 @@
-export { ping } from './ping'
+export { ping } from './ping';

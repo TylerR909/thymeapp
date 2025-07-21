@@ -4,7 +4,8 @@
     "private": true,
     "scripts": {
       "dev": "bun --hot src/index.ts",
-      "build": "bun build src/index.ts --outdir dist"
+      "build": "bun build src/index.ts --outdir dist",
+      "type-check": "tsc --noEmit --pretty"
     },
     "dependencies": {
       "@thymeapp/types": "workspace:*",

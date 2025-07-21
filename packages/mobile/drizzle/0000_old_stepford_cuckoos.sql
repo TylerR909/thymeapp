@@ -3,6 +3,9 @@ CREATE TABLE `pings` (
 	`timestamp` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
 	`latitude` real NOT NULL,
 	`longitude` real NOT NULL,
+	`accuracy` real,
+	`altitude` real,
+	`speed` real,
 	`updated_at` text DEFAULT (CURRENT_TIMESTAMP),
 	`created_at` text DEFAULT (CURRENT_TIMESTAMP)
 );

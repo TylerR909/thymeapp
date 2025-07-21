@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
+      // Redeclaring because Metro/Expo isn't inheriting the root tsconfig. Periodically try deleting this and see if Expo Go can load the app without it?
       "@mobile/*": ["./src/*"]
     }
   },
