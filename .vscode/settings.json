@@ -10,5 +10,8 @@
   "[typescriptreact]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
   // Candidates for User-Settings but until I'm not the only dev we can bundle it into the workspace
   "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
