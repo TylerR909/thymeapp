@@ -1,17 +1,14 @@
 import { AntDesign, Fontisto, Ionicons } from '@expo/vector-icons';
 import { useMigrations } from '@mobile/services/db/useMigrations';
-import { TransitionSpecs } from '@react-navigation/bottom-tabs';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export const unsable_settings = {
-  initialRouteName: 'settings',
-};
-
-export default function RootLayout() {
+export default function TabsLayout() {
+  const router = useRouter();
   useMigrations();
   const insets = useSafeAreaInsets();
+
   return (
     <SafeAreaProvider>
       <Tabs
@@ -20,18 +17,32 @@ export default function RootLayout() {
           tabBarStyle: { paddingBottom: insets.bottom, height: 64 },
         }}
       >
-        {/* <Tabs.Screen name="index" options={{ title: 'Home' }} redirect /> */}
-        <Tabs.Screen name="feed" options={{ tabBarIcon: () => <Ionicons name="list" size={24} /> }} />
         <Tabs.Screen
-          name="checkin/index"
+          name="feed/index"
           options={{
-            tabBarIcon: () => <AntDesign name="pluscircle" style={styles.checkinButtonIcon} size={48} />,
-            animation: 'shift',
-            freezeOnBlur: true,
-            transitionSpec: TransitionSpecs.ShiftSpec,
+            tabBarIcon: ({ color }) => <Ionicons name="list" size={24} color={color} />,
           }}
         />
-        <Tabs.Screen name="review" options={{ tabBarIcon: () => <Fontisto name="pie-chart-2" size={24} /> }} />
+        <Tabs.Screen
+          name="checkin-dummy"
+          options={{
+            tabBarIcon: ({ color }) => (
+              <AntDesign name="pluscircle" style={styles.checkinButtonIcon} size={48} color={color} />
+            ),
+          }}
+          listeners={{
+            tabPress: e => {
+              e.preventDefault();
+              router.push('/checkin');
+            },
+          }}
+        />
+        <Tabs.Screen
+          name="summary/index"
+          options={{
+            tabBarIcon: ({ color }) => <Fontisto name="pie-chart-2" size={24} color={color} />,
+          }}
+        />
       </Tabs>
     </SafeAreaProvider>
   );
