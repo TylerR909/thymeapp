@@ -46,6 +46,7 @@ export const GeoProvider = ({ children }: React.PropsWithChildren) => {
   const numPings = useLiveQuery(db.select({ count: count() }).from(ping));
 
   const { coords, timestamp = Date.now() } = geoLoc ?? {};
+  return children;
   return (
     <>
       {children}
