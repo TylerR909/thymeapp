@@ -1,27 +1,27 @@
 import { useRouter } from 'expo-router';
 import { Button, Text, View } from 'react-native';
 
-export default function CheckinSearch() {
+export default function Profile() {
   const router = useRouter();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Search for Location</Text>
-      <Text>Search results would appear here</Text>
+      <Text>Profile Screen</Text>
+      <Text>Settings available in header</Text>
       <Button
-        title="Select: Central Park"
+        title="Friends"
         onPress={() => {
-          router.replace('/(modal)/checkin?location=central-park');
+          router.push('/(profile)/friends');
         }}
       />
       <Button
-        title="Create New Location"
+        title="Settings"
         onPress={() => {
-          router.replace('/(modal)/checkin/create-location');
+          router.push('/(profile)/settings');
         }}
       />
       <Button
-        title="Cancel"
+        title="Back"
         onPress={() => {
           router.back();
         }}

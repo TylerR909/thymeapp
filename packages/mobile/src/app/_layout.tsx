@@ -3,28 +3,33 @@ import { DbSandbox } from '@mobile/services/db/DbSandbox';
 import { useMigrations } from '@mobile/services/db/useMigrations';
 import { GeoProvider } from '@mobile/services/GeoLocation/GeoProvider';
 import { Stack } from 'expo-router';
-import { type PropsWithChildren } from 'react';
 
 export default function RootLayout() {
   useMigrations();
   return (
     <AuthProvider>
-      <AuthProtectedProviders>
-        <Stack /* initialRouteName='(auth)' does nothing, nor does unstable_settings */>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(modal)" options={{ presentation: 'modal' }} />
-        </Stack>
-      </AuthProtectedProviders>
+      <AppContent />
     </AuthProvider>
   );
 }
 
-const AuthProtectedProviders = ({ children }: PropsWithChildren) => {
+const AppContent = () => {
   const { isLoggedIn } = useAuth();
-  return !isLoggedIn ? children : (
-      <DbSandbox>
-        <GeoProvider>{children}</GeoProvider>
-      </DbSandbox>
-    );
+  if (!isLoggedIn) return <AppStack />;
+  return (
+    <DbSandbox>
+      <GeoProvider>
+        <AppStack />
+      </GeoProvider>
+    </DbSandbox>
+  );
 };
+
+const AppStack = () => (
+  <Stack initialRouteName="(auth)">
+    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <Stack.Screen name="(profile)" options={{ headerShown: false }} />
+    <Stack.Screen name="(modal)" options={{ presentation: 'modal' }} />
+  </Stack>
+);

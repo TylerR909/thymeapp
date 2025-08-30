@@ -1,7 +1,7 @@
 import { AntDesign, Fontisto, Ionicons } from '@expo/vector-icons';
 import { useMigrations } from '@mobile/services/db/useMigrations';
 import { Tabs, useRouter } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabsLayout() {
@@ -41,6 +41,16 @@ export default function TabsLayout() {
           name="summary/index"
           options={{
             tabBarIcon: ({ color }) => <Fontisto name="pie-chart-2" size={24} color={color} />,
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  router.push('/(profile)/profile');
+                }}
+                style={{ marginRight: 16 }}
+              >
+                <Ionicons name="person" size={24} color="#007AFF" />
+              </TouchableOpacity>
+            ),
           }}
         />
       </Tabs>

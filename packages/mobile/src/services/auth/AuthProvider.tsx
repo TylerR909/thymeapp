@@ -24,14 +24,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Logic to log in the user
     console.log('login');
     setUser({ name: 'John Doe' }); // Example user data
-    // router.replace('/(tabs)/feed');
   };
 
   const logout = () => {
     // Logic to log out the user
     console.log('logout');
-    // router.replace('/(auth)/login');
     setUser(null);
+    // Force navigation reset
+    router.push('/(auth)/login');
   };
 
   /** Handle isLoggedIn redirects */

@@ -1,27 +1,32 @@
 import { useRouter } from 'expo-router';
 import { Button, Text, View } from 'react-native';
 
-export default function CheckinSearch() {
+export default function Friends() {
   const router = useRouter();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Search for Location</Text>
-      <Text>Search results would appear here</Text>
+      <Text>Friends Screen</Text>
       <Button
-        title="Select: Central Park"
+        title="Add Friend"
         onPress={() => {
-          router.replace('/(modal)/checkin?location=central-park');
+          router.push('/(profile)/add-friend');
         }}
       />
       <Button
-        title="Create New Location"
+        title="Friend Profile"
         onPress={() => {
-          router.replace('/(modal)/checkin/create-location');
+          router.push('/(profile)/friend-profile');
         }}
       />
       <Button
-        title="Cancel"
+        title="Settings"
+        onPress={() => {
+          router.push('/(profile)/settings');
+        }}
+      />
+      <Button
+        title="Back"
         onPress={() => {
           router.back();
         }}

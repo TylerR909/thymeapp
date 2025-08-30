@@ -1,23 +1,17 @@
 import { useRouter } from 'expo-router';
 import { Button, Text, View } from 'react-native';
 
-export default function CheckinSearch() {
+export default function CreateLocation() {
   const router = useRouter();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Search for Location</Text>
-      <Text>Search results would appear here</Text>
+      <Text>Create New Location</Text>
+      <Text>Address/Name input fields would go here</Text>
       <Button
-        title="Select: Central Park"
+        title="Create Location"
         onPress={() => {
-          router.replace('/(modal)/checkin?location=central-park');
-        }}
-      />
-      <Button
-        title="Create New Location"
-        onPress={() => {
-          router.replace('/(modal)/checkin/create-location');
+          router.replace('/(modal)/checkin?location=new-location');
         }}
       />
       <Button
