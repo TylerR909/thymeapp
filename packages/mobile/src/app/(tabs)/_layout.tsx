@@ -27,7 +27,7 @@ export default function TabsLayout() {
           name="checkin-dummy"
           options={{
             tabBarIcon: ({ color }) => (
-              <AntDesign name="pluscircle" style={styles.checkinButtonIcon} size={48} color={color} />
+              <AntDesign name="plus-circle" style={styles.checkinButtonIcon} size={48} color={color} />
             ),
           }}
           listeners={{
