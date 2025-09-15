@@ -2,12 +2,13 @@ import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import prettierConfig from './.prettierrc.js';
 
 /** @type {import('eslint').Linter.Config[]} */
-export default tseslint.config(
+export default defineConfig(
   {
     // Files that must remain CommonJS for tooling compatibility. Not sure why globalIgnores in packages/mobile isn't working.
     name: 'commonjs-ignores',
