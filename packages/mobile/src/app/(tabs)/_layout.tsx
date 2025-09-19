@@ -1,12 +1,10 @@
 import { AntDesign, Fontisto, Ionicons } from '@expo/vector-icons';
-import { useMigrations } from '@mobile/services/db/useMigrations';
 import { Tabs, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabsLayout() {
   const router = useRouter();
-  useMigrations();
   const insets = useSafeAreaInsets();
 
   return (

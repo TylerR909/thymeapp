@@ -1,5 +1,5 @@
-import { useRouter } from 'expo-router';
-import React, { useContext, useEffect } from 'react';
+import { Redirect, useRouter } from 'expo-router';
+import React, { useContext } from 'react';
 
 type AuthContext = {
   login: VoidFunction;
@@ -34,19 +34,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     router.push('/(auth)/login');
   };
 
-  /** Handle isLoggedIn redirects */
-  useEffect(() => {
-    // useEffect is running "too fast" before the Stacks properly mounts, so delaying
-    // any amount of time is enough to mount the Stack and redirect.
-    setImmediate(() => {
-      if (isLoggedIn) router.replace('/(tabs)/feed');
-      else router.replace('/(auth)/login');
-    });
-  }, [isLoggedIn, router]);
-
   console.log({ isLoggedIn, user });
 
-  return <AuthContext.Provider value={{ login, logout, isLoggedIn, user }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ login, logout, isLoggedIn, user }}>
+      {isLoggedIn ?
+        <Redirect href="/(tabs)/feed" />
+      : null}
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);

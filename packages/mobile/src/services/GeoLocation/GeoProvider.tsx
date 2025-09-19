@@ -1,10 +1,6 @@
 import { db, ping } from '@mobile/services/db';
-import { useToggle } from '@mobile/utils/hooks/useToggle';
-import { count } from 'drizzle-orm';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import * as Location from 'expo-location';
-import React, { useEffect, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
 
 /**
  * For the most part Geo Services run in the background and update the database with time-series
@@ -15,12 +11,6 @@ import { Button, Text, View } from 'react-native';
  */
 
 export const GeoProvider = ({ children }: React.PropsWithChildren) => {
-  const [t, toggle] = useToggle();
-  const [status, requestPermission, getPermission] = Location.useForegroundPermissions({ request: true });
-  const [status2, requestPermission2, getPermission2] = Location.useBackgroundPermissions({ request: true });
-
-  const [geoLoc, setGeoLoc] = useState<Location.LocationObject | null>();
-  const [postal, setPostal] = useState<Location.LocationGeocodedAddress[] | null>();
   useEffect(() => {
     void (async () => {
       await Location.requestForegroundPermissionsAsync();
@@ -29,9 +19,9 @@ export const GeoProvider = ({ children }: React.PropsWithChildren) => {
         accuracy: Location.LocationAccuracy.High,
         distanceInterval: 50,
       });
-      setGeoLoc(location);
       const postal = await Location.reverseGeocodeAsync(location.coords);
-      setPostal(postal);
+
+      console.log(postal[0]);
 
       await db.insert(ping).values({
         latitude: location.coords.latitude,
@@ -41,30 +31,9 @@ export const GeoProvider = ({ children }: React.PropsWithChildren) => {
         speed: location.coords.speed,
       });
     })();
-  }, [t]);
+  }, []);
 
-  const numPings = useLiveQuery(db.select({ count: count() }).from(ping));
-
-  const { coords, timestamp = Date.now() } = geoLoc ?? {};
   return children;
-  return (
-    <>
-      {children}
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {!geoLoc ?
-          <Text>Test Component!</Text>
-        : <>
-            <Text>{numPings.data[0]?.count} total pings</Text>
-            <Text>
-              Location at {new Date(timestamp).toLocaleTimeString()} was {coords?.latitude} {coords?.longitude} (
-              {coords?.accuracy})
-            </Text>
-          </>
-        }
-        <Button title="Refetch" onPress={toggle} />
-      </View>
-    </>
-  );
 };
 
 const EVERY_MINUTE_MS = 1000 * 60;
