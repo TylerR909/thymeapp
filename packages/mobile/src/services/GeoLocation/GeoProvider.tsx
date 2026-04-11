@@ -45,7 +45,7 @@ export const GeoProvider = ({ children }: React.PropsWithChildren) => {
 
   const numPings = useLiveQuery(db.select({ count: count() }).from(ping));
 
-  const { coords, timestamp = Date.now() } = geoLoc ?? {};
+  const { coords, timestamp } = geoLoc ?? {};
   return (
     <>
       {children}
@@ -55,7 +55,7 @@ export const GeoProvider = ({ children }: React.PropsWithChildren) => {
         : <>
             <Text>{numPings.data[0]?.count} total pings</Text>
             <Text>
-              Location at {new Date(timestamp).toLocaleTimeString()} was {coords?.latitude} {coords?.longitude} (
+              Location at {new Date(timestamp ?? 0).toLocaleTimeString()} was {coords?.latitude} {coords?.longitude} (
               {coords?.accuracy})
             </Text>
           </>
