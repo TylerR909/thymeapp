@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -17,6 +18,7 @@ export default defineConfig(
       '**/packages/mobile/drizzle/**', // generated file
     ],
   },
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname } } },
   { name: 'globals', languageOptions: { globals: { ...globals.browser, ...globals.es2021 } } },
   // This ensures ESLint runs Prettier as formatter
@@ -41,7 +43,7 @@ export default defineConfig(
     name: 'react',
     // files: ['**/packages/mobile/**/*.{js,jsx,ts,tsx}', '**/packages/web/**/*.{js,jsx,ts,tsx}'],
     files: ['**/*.{jsx,tsx}'],
-    plugins: { react, 'react-hooks': reactHooks },
+    plugins: { react: fixupPluginRules(react), 'react-hooks': reactHooks },
     settings: { react: { version: 'detect' } },
     rules: {
       ...react.configs.recommended.rules,
@@ -62,8 +64,8 @@ export default defineConfig(
     name: 'react-native',
     files: ['**/packages/mobile/**/*.{js,jsx,ts,tsx}'],
     plugins: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      'react-native': reactNative,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      'react-native': fixupPluginRules(reactNative),
     },
     rules: {
       'react-native/no-unused-styles': 'error',
