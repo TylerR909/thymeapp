@@ -1,6 +1,6 @@
 # Agent notes
 
-Read [`docs/TOOLING.md`](docs/TOOLING.md) for stack and layout. Bun workspaces, not npm/yarn.
+Read [`docs/TOOLING.md`](docs/TOOLING.md) for what runs today. [`docs/ROADMAP.md`](docs/ROADMAP.md) is a **non-binding** future stack (Joist, PowerSync, Eden, etc.) — do not install those unless the task says to. Bun workspaces, not npm/yarn.
 
 Product language:
 

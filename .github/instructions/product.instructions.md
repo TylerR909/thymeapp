@@ -8,4 +8,4 @@ When the user says **Swarm**, **Lifecycle**, **Life Cycle**, **LifeCycle**, or *
 How ThymeApp uses both, and what not to copy blindly: [`docs/references/README.md`](../../docs/references/README.md).
 
 Screen specs: [`packages/mobile/src/SCREENS.md`](../../packages/mobile/src/SCREENS.md).
-Stack: [`docs/TOOLING.md`](../../docs/TOOLING.md).
+Stack today: [`docs/TOOLING.md`](../../docs/TOOLING.md). Non-binding future stack: [`docs/ROADMAP.md`](../../docs/ROADMAP.md).

@@ -1,6 +1,6 @@
 # Tooling and layout
 
-Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md).
+Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md). Non-binding future stack: [`ROADMAP.md`](./ROADMAP.md).
 
 ## Stack
 
