@@ -1,41 +1,32 @@
 # Workspace Architecture
 
-## Monorepo Overview
-**ThymeApp** - Self-hosted location tracking app (like Swarm/Foursquare)
-**Package Manager**: Bun (NOT npm/yarn)
+**ThymeApp** — self-hosted location tracking combining Swarm check-ins and Lifecycle recaps (`docs/references/`).
+**Package manager**: Bun (not npm/yarn). See `docs/TOOLING.md`.
 
-## Package Structure
-
-### `packages/core/`
-- **Purpose**: Shared business logic and utilities
-- **Dependencies**: Minimal, no platform-specific code
-- **Used by**: All other packages
+## Layout
 
 ### `packages/mobile/`
-- **Purpose**: React Native/Expo mobile app
-- **Framework**: React Native + Expo managed workflow
-- **Database**: SQLite + Drizzle ORM
-- **Features**: Primary user interface, check-ins, social features
+Expo SDK 57 + Expo Go. SQLite + Drizzle. Primary check-in / stay UI.
+
+### `packages/web/`
+Vite + React 19. Server admin and per-user history browser.
 
 ### `packages/server/`
-- **Purpose**: Backend API server
-- **Runtime**: Bun, Docker Compose, PostgreSQL
-- **Database**: PostgreSQL + Drizzle (shared schema with mobile)
-- **Features**: Authentication, API endpoints, federated social
+Bun + Elysia stub. Postgres 17 is pinned in `docker-compose.yml` for later.
+
+### `packages/core/`
+Shared domain logic. No platform imports.
+
+### `packages/components/`
+Shared UI. Keep RN-safe / universal.
 
 ### `packages/types/`
-- **Purpose**: Shared TypeScript definitions
-- **Dependencies**: None (pure types)
-- **Used by**: All packages for type safety
+Shared TypeScript types. No runtime.
 
-### `packages/web/` (Planned)
-- **Purpose**: Web application (future)
-- **Runtime**: Bun/React.js
-- **Dependencies**: Will use core and types packages
-
-## Dependency Flow
 ```
 types ← core ← mobile
-  ↑      ↑       
-  └─── server   
+  ↑      ↑       ↑
+  └─── server   web
+         ↑
+    components
 ```

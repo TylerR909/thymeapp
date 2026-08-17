@@ -3,7 +3,6 @@ import { db } from '.';
 import { ping } from './schema';
 
 export const DbSandbox = () => {
-  const { data } = useLiveQuery(db.select().from(ping));
-  // console.log( data);
+  useLiveQuery(db.select().from(ping));
   return null;
 };

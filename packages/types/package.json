@@ -1,5 +1,18 @@
 {
-    "name": "@thymeapp/types",
-    "version": "0.1.0",
-    "private": true
+  "name": "@thymeapp/types",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "precheck": "bun run type-check && bun run lint"
   }
+}
