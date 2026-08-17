@@ -11,6 +11,7 @@ One sentence: **Expo Router + Drizzle + PowerSync + TanStack Query on mobile · 
 - Mobile UI reads **local SQLite**. The network is how that copy stays honest, not how the screen renders.
 - **Joist** owns rich domain logic and Postgres persistence. **Elysia** is the HTTP transport, not the domain model.
 - **Bun workspaces** for the monorepo. Turborepo only if CI / task graphs get painful.
+- **Built for Docker from day one.** Official mobile app; web + backend are what self-hosters run. No POC/MVP deploy yet, but images and Compose should exist before the API grows roots on the host.
 
 ## How this maps onto this repo
 
@@ -86,6 +87,27 @@ Clients do not talk to Postgres on the sync path. PowerSync is a service + SDK, 
 
 This is **not** week-one work. Local Drizzle without sync is enough until check-ins exist.
 
+## Docker (do soon — hard to bolt on later)
+
+Distribution model: **one official mobile app**; **self-hosted web + backend**. Self-hosters should paste a Compose file and get a running instance. The app is nowhere near a deployable POC, but “runs in Docker” is a day-1 *shape*, not a launch-week surprise.
+
+**Three services, three containers.** Do not stuff the Vite/static web UI into the API image.
+
+| Service | Image / role | Deploy | Local extra |
+| --- | --- | --- | --- |
+| `postgres` | Official `postgres:17` | One volume, one DB | Disposable volume; reset / migrate / `pg_restore` / reseed on demand |
+| `server` | Our Bun + Elysia (+ Joist later) image | App only | Same image; talks to local Postgres |
+| `web` | Static or Vite-built frontend | Serves the admin + history UI | Same image or `bun start` on the host against Docker Postgres |
+
+Two Compose files (or one file + override), not one compromise:
+
+- **`compose.yaml` (self-host)** — postgres + server + web. Boring. No test databases, no seed jobs, no bind-mount of the monorepo.
+- **`compose.dev.yaml` (local)** — same three, plus a Postgres you can wipe. Scripts: `db:reset`, `db:migrate`, `db:restore`, `db:seed`. Joist unit tests use a **real** Postgres (flush schema, then truncate/reset between tests). That test database is **dev/CI only** — it does not ship in the self-host file.
+
+Today `packages/server/docker-compose.yml` is only the Postgres pin. Promote this to repo-root Compose + Dockerfiles for `server` and `web` in the next infra pass (can land in parallel with the UI foundation PR and with product docs).
+
+Mobile is **not** containerized for self-hosters. Dev Container remains optional; host `bun start` is still the Expo loop.
+
 ## Type-safety flow (the actual DX goal)
 
 1. Migration / schema change.
@@ -106,6 +128,11 @@ If a proposed library does not participate in that loop, it is a hard sell.
 - **GraphQL** — only if the Joist plugin is clearly better than Eden + Query for our reads.
 - **Turborepo** — only if `bun` scripts + CI become slow.
 
+## Next code passes (still not product)
+
+1. **UI foundations** — TanStack Router, NativeWind + Tailwind, Lingui, UUID-shaped local schema. No real screens required.
+2. **Docker** — root `compose.yaml` + `compose.dev.yaml`, Dockerfiles for server and web, reset/migrate/restore/seed scripts, Joist-ready test DB story. Postgres-only in deploy; full reset machinery in local.
+
 ## What this does *not* change today
 
-Do not add Joist, PowerSync, TanStack, Lingui, NativeWind, or Eden in the modernization PR. The running stack stays: Expo Router, Drizzle/SQLite, Vite scaffold, Elysia `/health`, Bun workspaces, Jest on mobile, `bun test` on core/web.
+Do not add Joist, PowerSync, TanStack, Lingui, NativeWind, or Eden in the modernization PR. The running stack stays: Expo Router, Drizzle/SQLite, Vite scaffold, Elysia `/health`, Bun workspaces, Jest on mobile, `bun test` on core/web. The existing server Compose file is a Postgres pin only.

@@ -13,7 +13,7 @@ Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md).
 | Mobile | **Expo SDK 57 + Expo Router** | RN 0.86, React 19.2, expo-sqlite 57. |
 | Mobile data | **SQLite + Drizzle 0.45** | Latest stable. Drizzle 1.0 is beta. |
 | Web | **Vite + React 19** | Admin + history browser. Scaffold only. |
-| Server | **Bun + Elysia 1.4** | Already in the original boilerplate; stub + `/health`. Postgres 17 is pinned in Compose. Elysia 2 is beta. |
+| Server | **Bun + Elysia 1.4** | Already in the original boilerplate; stub + `/health`. Postgres 17 is pinned in `packages/server/docker-compose.yml`. Promote to 3-service (pg + server + web) Compose soon — see [`ROADMAP.md`](./ROADMAP.md). Elysia 2 is beta. |
 | Tests | **`bun test`** (core, web) + **Jest / jest-expo** (mobile) | Bun cannot load React Native. `bun test` from root ignores `packages/mobile`. |
 | Hooks | **Lefthook** | Staged ESLint + type-check + Jest. |
 | License | **AGPL-3.0-only** | Self-hosted network app. |
