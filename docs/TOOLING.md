@@ -14,7 +14,7 @@ Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md).
 | Mobile data | **SQLite + Drizzle 0.45** | Latest stable. Drizzle 1.0 is beta. |
 | Web | **Vite + React 19** | Admin + history browser. Scaffold only. |
 | Server | **Bun + Elysia 1.4** | Already in the original boilerplate; stub + `/health`. Postgres 17 is pinned in Compose. Elysia 2 is beta. |
-| Tests | **Jest** (`jest-expo` on mobile) | Use `bun run test`, not `bun test`. |
+| Tests | **`bun test`** (core, web) + **Jest / jest-expo** (mobile) | Bun cannot load React Native. `bun test` from root ignores `packages/mobile`. |
 | Hooks | **Lefthook** | Staged ESLint + type-check + Jest. |
 | License | **AGPL-3.0-only** | Self-hosted network app. |
 
@@ -27,8 +27,8 @@ From the repo root:
 ```bash
 bun start       # mobile + web + server
 bun precheck    # type-check + lint
-bun run test    # all Jest suites
-bun smoke       # /health + Vite build + expo export (iOS JS)
+bun test        # core + web
+cd packages/mobile && bun run test   # jest-expo
 ```
 
 `start` is Metro / Vite / `bun --hot`. It is not `expo run:ios`.

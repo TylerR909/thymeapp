@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
-    "test": "jest --config ../../jest.config.js --selectProjects web",
+    "test": "bun test",
     "precheck": "bun run type-check && bun run lint",
     "smoke": "bun run build"
   },
@@ -21,15 +21,10 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
-    "@types/jest": "^29.5.14",
     "@types/react": "~19.2.4",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.0.4",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "ts-jest": "^29.4.1",
     "typescript": "~6.0.3",
     "vite": "^7.1.7"
   }

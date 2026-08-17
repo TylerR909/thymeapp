@@ -34,7 +34,7 @@ cd packages/web && bun start
 cd packages/server && bun start
 ```
 
-From the repo root, `bun start` boots all three. `bun precheck` is type-check + lint. `bun run test` is Jest (`bun test` is Bun’s own runner — do not use it). `bun smoke` proves server `/health`, the Vite build, and the iOS JS bundle.
+From the repo root, `bun start` boots all three. `bun precheck` is type-check + lint. `bun test` is Bun’s runner (core + web). Mobile stays on Jest (`cd packages/mobile && bun run test`) because React Native is not bun-testable.
 
 ## Mobile: Simulator vs phone
 

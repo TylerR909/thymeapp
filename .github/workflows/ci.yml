@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  check:
+  type-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,8 +15,32 @@ jobs:
           bun-version-file: .bun-version
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version-file: .node-version
       - run: bun install --frozen-lockfile
-      - run: bun run precheck
+      - run: bun run type-check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: bun install --frozen-lockfile
       - run: bun run test
-      - run: bun run smoke
