@@ -1,0 +1,6 @@
+[install]
+linker = "hoisted"
+
+[test]
+preload = ["./packages/web/test/setup.ts"]
+pathIgnorePatterns = ["packages/mobile/**"]

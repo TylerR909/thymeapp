@@ -7,10 +7,10 @@ applyTo: "packages/mobile/**/*"
 ## App Overview
 **Self-hosted location tracking** similar to Swarm (by Foursquare) and LifeCycle (by Sleep Cycle). Architecture is inspired by Immich whereupon users host and manage their own self-hosted private server, and a mobile application anyone can download for free is published which can then connect to your own self-hosted server. It aims to give users and families full ownership over their sensitive location history, visualize that data in fun ways, and share specific events (such as Restaurant check-ins) with friends (either on your own multi-tenant server or across federated servers to other self-hosters). 
 
-> 📋 **Key Reference**: `packages/mobile/src/SCREENS.md` for detailed feature specs
+> **Key references**: `packages/mobile/src/SCREENS.md` (screens). Swarm/Lifecycle vocabulary: `docs/references/README.md`. Stack: `docs/TOOLING.md`.
 
 ## Tech Stack
-- **Framework**: React Native + Expo managed workflow
+- **Framework**: React Native 0.86 + Expo SDK 57 managed workflow
 - **Navigation**: Expo Router (file-based)
 - **Database**: SQLite + Drizzle ORM
 - **Styling**: React Native StyleSheet

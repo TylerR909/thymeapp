@@ -1,5 +1,7 @@
 # Screens
 
+Product vocabulary: **Swarm** = [`docs/references/swarm.md`](../../../docs/references/swarm.md) (explicit check-ins, stickers, mayorships). **Lifecycle** = [`docs/references/lifecycle.md`](../../../docs/references/lifecycle.md) (passive stays, donut recaps). How they combine: [`docs/references/README.md`](../../../docs/references/README.md).
+
 ## Login
 
 As a primarily self-hosted app (similar to Immich), people will need to begin by submitting a URL (or QR code). This will dispatch a login request to that URL and prompt a user to sign-up if nothing comes back.

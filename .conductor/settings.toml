@@ -1,0 +1,56 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+file_include_globs = ".env*\n**/.env*\n**/.env.local\n"
+
+[scripts]
+setup = "bun install"
+run_mode = "concurrent"
+
+[scripts.run.mobile]
+command = "bun start -- --port $CONDUCTOR_PORT"
+default = true
+icon = "play"
+
+[scripts.run.mobile.options]
+cwd = "packages/mobile"
+
+[scripts.run.web]
+command = "bun start -- --port $CONDUCTOR_PORT"
+icon = "globe"
+
+[scripts.run.web.options]
+cwd = "packages/web"
+
+[scripts.run.server]
+command = "PORT=$CONDUCTOR_PORT bun start"
+icon = "server"
+
+[scripts.run.server.options]
+cwd = "packages/server"
+
+[scripts.run.precheck]
+command = "bun run precheck"
+icon = "braces"
+
+[scripts.run.test]
+command = "bun run test"
+icon = "test-tube"
+
+[prompts]
+general = """
+This is a Bun workspace monorepo (packages/*). Never use npm or yarn.
+
+Layout:
+- packages/mobile — Expo SDK 57 + Expo Go + Expo Router (src/app) + SQLite/Drizzle
+- packages/web — Vite + React 19 (admin + history browser)
+- packages/server — Bun + Elysia stub; Postgres 17 is pinned in docker-compose
+- packages/core, packages/components, packages/types — shared code
+
+From a package directory, `bun start` is the dev server. From the repo root, `bun start` boots mobile+web+server, `bun precheck` is type-check+lint, `bun run test` is all Jest suites.
+Keep changes small. Run the narrowest relevant lint/type-check/test after edits.
+
+When the user says Swarm, Lifecycle, Life Cycle, or Swarm/Lifecycle, read docs/references/README.md plus docs/references/swarm.md and/or docs/references/lifecycle.md before designing or implementing.
+"""
+
+[git]
+archive_on_merge = true

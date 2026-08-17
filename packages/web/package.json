@@ -2,13 +2,30 @@
   "name": "@thymeapp/web",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "bun vite",
-    "build": "bun vite build"
+    "start": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "test": "bun test",
+    "precheck": "bun run type-check && bun run lint",
+    "smoke": "bun run build"
   },
   "dependencies": {
     "@thymeapp/core": "workspace:*",
-    "@thymeapp/types": "workspace:*"
+    "@thymeapp/types": "workspace:*",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "~19.2.4",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.0.4",
+    "typescript": "~6.0.3",
+    "vite": "^7.1.7"
+  }
 }

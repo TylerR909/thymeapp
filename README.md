@@ -1,57 +1,50 @@
 # ThymeApp
 
-A cross-platform time tracking application built with React Native and Expo.
+Self-hosted location tracking: [Foursquare Swarm](docs/references/swarm.md)–style check-ins plus [Life Cycle](docs/references/lifecycle.md)–style recaps. See [docs/references](docs/references/README.md), [docs/TOOLING.md](docs/TOOLING.md) (what runs today), and [docs/ROADMAP.md](docs/ROADMAP.md) (non-binding future stack).
 
-## Monorepo Structure
+Licensed under the [GNU Affero General Public License v3.0](LICENSE).
 
-This is a Bun workspace monorepo with the following packages:
+## Requirements
 
-- **`packages/core/`** - Shared business logic and utilities
-- **`packages/mobile/`** - React Native/Expo mobile application
-- **`packages/server/`** - Backend API server
-- **`packages/types/`** - Shared TypeScript type definitions
-- **`packages/web/`** - Web application (planned)
+- **Bun** `1.3.14` (see `.bun-version`). Upgrade with `bun upgrade`.
+- **Node.js** 22.13+ (24 recommended; see `.node-version`)
 
-## Quick Start
+## Layout
 
-To install dependencies:
+- **`packages/mobile/`** — Expo SDK 57 app
+- **`packages/web/`** — Vite admin + history browser (scaffold)
+- **`packages/server/`** — Bun + Elysia stub (Postgres 17 Compose file when needed)
+- **`packages/core/`**, **`packages/components/`**, **`packages/types/`** — shared code
+
+## Quick start (host)
+
+Run this on the Mac, not inside the Dev Container. The inner loop that works is host Bun + Simulator or a matching Expo Go.
 
 ```bash
 bun install
-```
 
-To run the mobile app:
-
-```bash
 cd packages/mobile
-bun run start
+bun start          # Metro only — then press `i` for iOS Simulator
 ```
 
-To run the server:
+Other packages, same name:
 
 ```bash
-cd packages/server
-bun run start
+cd packages/web && bun start
+cd packages/server && bun start
 ```
 
-## Development
+From the repo root, `bun start` boots all three. `bun precheck` is type-check + lint. `bun test` is Bun’s runner (core + web). Mobile stays on Jest (`cd packages/mobile && bun run test`) because React Native is not bun-testable.
 
-This project uses:
+## Mobile: Simulator vs phone
 
-- **Bun** as the package manager and runtime
-- **React Native** with Expo for mobile development
-- **SQLite** with Drizzle ORM for data persistence
-- **TypeScript** for type safety
-- **ESLint** and Prettier for code formatting
+`bun start` starts Metro. It does not install an app by itself.
 
-## Available Scripts
+- **iOS Simulator (recommended right now):** press `i` in the Expo TUI. Expo CLI can install the **SDK 57** Simulator Expo Go. You do not need a LAN IP.
+- **Physical iPhone:** App Store Expo Go stops at **SDK 54**. This project is **57**, so the purple App Store app will refuse it. Use [expo.dev/go](https://expo.dev/go) / [sign.expo.dev](https://sign.expo.dev/) or `eas go` (TestFlight). Copy `.env.example` → `.env.local` and set `REACT_NATIVE_PACKAGER_HOSTNAME` to the Mac’s LAN IP (Expo 57+ will not load that value from `.env`).
 
-```bash
-bun run lint          # Lint all packages
-bun run lint:fix      # Fix linting issues
-bun run type-check    # TypeScript type checking
-```
+A development build (`expo-dev-client`) is the next step when Expo Go is too far behind or you need background location.
 
----
+## Dev Container
 
-This project was created using `bun init` in bun v1.2.8. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+Optional Linux box. It cannot launch Simulator.app. Prefer host `bun start` for mobile.

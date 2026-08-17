@@ -1,12 +1,18 @@
 {
-  "extends": ["expo/tsconfig.base", "../../tsconfig.json"],
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "paths": {
-      // Redeclaring because Metro/Expo isn't inheriting the root tsconfig. Periodically try deleting this and see if Expo Go can load the app without it?
-      "@mobile/*": ["./src/*"]
-    }
+    "target": "ES2022",
+    "customConditions": [
+      "react-native"
+    ]
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
-  "exclude": ["app-example/*"]
+  "exclude": [
+    "drizzle"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
 }

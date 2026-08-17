@@ -1,29 +1,23 @@
 # Development Tooling
 
-## Package Management - Bun (NOT npm/yarn)
+Canonical stack: `docs/TOOLING.md`.
+
+From a package: `bun start`, `bun lint`, `bun type-check`, `bun test`, `bun precheck`.
+
+From the repo root:
+
 ```bash
-bun install                    # Install dependencies
-bun add <package>             # Add dependency
-bun run <script>              # Run script
-cd packages/mobile && bun run start  # Start mobile app
+bun install
+bun start          # mobile + web + server
+bun precheck       # type-check + lint
+bun test           # core + web (Bun)
+cd packages/mobile && bun run test   # jest-expo
 ```
 
-## Code Quality
-- **TypeScript**: Strict checking, workspace path aliases
-- **ESLint**: React Native community config + custom rules
-- **Prettier**: Auto-formatting with organize imports
-- **Husky**: Pre-commit hooks for linting/type checking
-
-## Mobile Development (Expo)
-```bash
-cd packages/mobile
-bun run start                # Expo dev server
-bun run android/ios         # Platform-specific
-```
-
-## Database (Drizzle)
-```bash
-bun run db:generate         # Generate migrations
-bun run db:migrate          # Run migrations
-bun run db:studio           # Open Drizzle Studio
-```
+- **Bun** workspaces — never npm/yarn
+- **TypeScript 6** (not 7). Shared `tsconfig.json`; packages only add Hermes / DOM / Bun types
+- **ESLint 9** + Prettier. Shared style; React hooks only on mobile/web
+- **Lefthook** — staged ESLint + type-check
+- **`bun test`** for core/web. Mobile stays on Jest (`jest-expo`) because Bun cannot load React Native
+- **Expo SDK 57.** App Store Expo Go is SDK 54 — use Simulator (`bun start` then `i`) or expo.dev/go / sign.expo.dev on a phone
+- Vite for web. Prefer **host** Bun for mobile; the Dev Container cannot launch Simulator.app

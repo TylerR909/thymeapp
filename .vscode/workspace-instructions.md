@@ -33,3 +33,4 @@ When working with GitHub Copilot in this workspace:
 3. Database operations use Drizzle ORM
 4. All packages should maintain TypeScript compliance
 5. Follow the existing ESLint configuration
+6. "Swarm" and "Lifecycle" mean the recaps in `docs/references/` — read those before designing related features
