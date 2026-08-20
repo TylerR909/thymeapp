@@ -1,0 +1,15 @@
+.git
+.expo
+.vscode
+node_modules
+**/node_modules
+**/dist
+**/coverage
+ios
+android
+packages/mobile/ios
+packages/mobile/android
+var
+*.md
+.env
+.env.*

@@ -1,0 +1,19 @@
+{
+  "name": "@thymeapp/logging",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "test": "bun test",
+    "precheck": "bun run type-check && bun run lint"
+  },
+  "dependencies": {
+    "tslog": "^5"
+  }
+}

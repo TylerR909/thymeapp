@@ -13,6 +13,7 @@
     "smoke": "bun smoke.ts"
   },
   "dependencies": {
+    "@thymeapp/logging": "workspace:*",
     "@thymeapp/types": "workspace:*",
     "elysia": "^1.4.29"
   }

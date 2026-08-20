@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@thymeapp/core": "workspace:*",
+    "@thymeapp/logging": "workspace:*",
     "@thymeapp/types": "workspace:*",
     "react": "19.2.3",
     "react-dom": "19.2.3"

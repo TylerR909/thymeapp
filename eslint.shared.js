@@ -21,6 +21,8 @@ export const shared = defineConfig(
       '**/dist/**',
       '**/.expo/**',
       '**/expo-env.d.ts',
+      '**/ios/**',
+      '**/android/**',
       'scripts/**',
     ],
   },

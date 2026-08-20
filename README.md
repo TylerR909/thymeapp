@@ -13,38 +13,35 @@ Licensed under the [GNU Affero General Public License v3.0](LICENSE).
 
 - **`packages/mobile/`** — Expo SDK 57 app
 - **`packages/web/`** — Vite admin + history browser (scaffold)
-- **`packages/server/`** — Bun + Elysia stub (Postgres 17 Compose file when needed)
+- **`packages/server/`** — Bun + Elysia stub. Local Postgres via Compose. Release image also serves the web UI.
+- **`packages/logging/`** — tslog factory (stdout now; disk/remote later)
 - **`packages/core/`**, **`packages/components/`**, **`packages/types/`** — shared code
 
 ## Quick start (host)
 
-Run this on the Mac, not inside the Dev Container. The inner loop that works is host Bun + Simulator or a matching Expo Go.
+Run this on the Mac, not inside the Dev Container.
 
 ```bash
 bun install
-
-cd packages/mobile
-bun start          # Metro only — then press `i` for iOS Simulator
+bun db             # Postgres (thymeapp + thymeapp_tests_1)
+bun start          # Compose: postgres + server + web
+bun urls           # host ports Docker assigned
+bun start:mobile   # Expo / Metro — then press `i` for iOS Simulator
 ```
 
-Other packages, same name:
+Inside a package, `bun start` is still that package on the host (`packages/mobile` = Metro, `packages/server` = `bun --hot`, `packages/web` = Vite). Root `bun start` is Compose only. Details: [`docs/LOCAL-DB.md`](docs/LOCAL-DB.md). `bun precheck` is type-check + lint. `bun test` is Bun’s runner (core + web). Mobile stays on Jest (`cd packages/mobile && bun run test`) because React Native is not bun-testable.
+
+## Mobile
+
+Not Expo Go. Development build, same as Expo’s docs:
 
 ```bash
-cd packages/web && bun start
-cd packages/server && bun start
+cd packages/mobile
+bun run ios                 # compile + install + Metro (Simulator)
+bun run ios -- --device     # same, iPhone
+bun start                   # later: Metro only, then `i`
 ```
-
-From the repo root, `bun start` boots all three. `bun precheck` is type-check + lint. `bun test` is Bun’s runner (core + web). Mobile stays on Jest (`cd packages/mobile && bun run test`) because React Native is not bun-testable.
-
-## Mobile: Simulator vs phone
-
-`bun start` starts Metro. It does not install an app by itself.
-
-- **iOS Simulator (recommended right now):** press `i` in the Expo TUI. Expo CLI can install the **SDK 57** Simulator Expo Go. You do not need a LAN IP.
-- **Physical iPhone:** App Store Expo Go stops at **SDK 54**. This project is **57**, so the purple App Store app will refuse it. Use [expo.dev/go](https://expo.dev/go) / [sign.expo.dev](https://sign.expo.dev/) or `eas go` (TestFlight). Copy `.env.example` → `.env.local` and set `REACT_NATIVE_PACKAGER_HOSTNAME` to the Mac’s LAN IP (Expo 57+ will not load that value from `.env`).
-
-A development build (`expo-dev-client`) is the next step when Expo Go is too far behind or you need background location.
 
 ## Dev Container
 
-Optional Linux box. It cannot launch Simulator.app. Prefer host `bun start` for mobile.
+Optional Linux box. It cannot launch Simulator.app. Prefer host `bun start:mobile` for Expo.
