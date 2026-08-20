@@ -1,15 +1,16 @@
 import { expect, test } from 'bun:test';
-import { defaultMinLevel, parseLogLevel } from './levels';
+import { defaultLowestLevel, tryParseLogLevel } from './levels';
 
-test('parseLogLevel accepts names case-insensitively', () => {
-  expect(parseLogLevel('debug')).toBe('DEBUG');
-  expect(parseLogLevel('WARN')).toBe('WARN');
-  expect(parseLogLevel('nope')).toBeUndefined();
-  expect(parseLogLevel(undefined)).toBeUndefined();
+test('tryParseLogLevel accepts names case-insensitively', () => {
+  expect(tryParseLogLevel('debug')).toBe('debug');
+  expect(tryParseLogLevel('WARN')).toBe('warning');
+  expect(tryParseLogLevel('warning')).toBe('warning');
+  expect(tryParseLogLevel('nope')).toBeUndefined();
+  expect(tryParseLogLevel(undefined)).toBeUndefined();
 });
 
-test('defaultMinLevel is DEBUG only when isDev is true', () => {
-  expect(defaultMinLevel(true)).toBe('DEBUG');
-  expect(defaultMinLevel(false)).toBe('INFO');
-  expect(defaultMinLevel()).toBe('INFO');
+test('defaultLowestLevel is debug only when isDev is true', () => {
+  expect(defaultLowestLevel(true)).toBe('debug');
+  expect(defaultLowestLevel(false)).toBe('info');
+  expect(defaultLowestLevel()).toBe('info');
 });

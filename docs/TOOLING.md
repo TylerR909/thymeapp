@@ -19,7 +19,7 @@ Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md).
 | Postgres | **18** (Compose) | One instance, `thymeapp` + `thymeapp_tests_*`. Host ports are ephemeral (`bun urls`). See [`LOCAL-DB.md`](./LOCAL-DB.md). |
 | Tests | **`bun test`** (core, web) + **Jest / jest-expo** (mobile) | Bun cannot load React Native. `bun test` from root ignores `packages/mobile`. |
 | Hooks | **Lefthook** | Staged ESLint + type-check + Jest. |
-| Logging | **`@thymeapp/logging`** | tslog on server/web; `console` on native. Shared packages do not read `process.env` — each app parses its own runtime and passes `isDev` / `minLevel`. |
+| Logging | **LogTape** via `@thymeapp/logging` | `configureAppLogging` + `getLogger`. Console now; extra sinks later. |
 | License | **AGPL-3.0-only** | Self-hosted network app. |
 
 ## Commands
@@ -91,7 +91,7 @@ Source locale is `en`. `pseudo-en` is a padded/accented QA locale (toggle on the
 packages/mobile      Expo app (host; not in Compose)
 packages/web         Vite admin + history (scaffold; Compose bind-mount)
 packages/server      Elysia stub (Compose bind-mount)
-packages/logging     tslog factory + default mask. No `@thymeapp/*` imports.
+packages/logging     LogTape configure helper. No `@thymeapp/*` imports.
 packages/core        Shared domain (no platform imports)
 packages/components  Shared UI
 packages/types       Shared types
@@ -106,15 +106,14 @@ Shared `tsconfig.json` and ESLint style live at the repo root. Packages only add
 
 ### Logging
 
-`@thymeapp/logging` is a leaf: ESLint forbids it from importing other `@thymeapp/*` packages. Apps call `createLogger({ name, isDev })` (or set `LOG_LEVEL` / `TSLOG_LEVEL`).
+`@thymeapp/logging` is a leaf: ESLint forbids it from importing other `@thymeapp/*` packages. Apps call `configureAppLogging` once, then `getLogger(['thymeapp', 'server' | 'web' | 'mobile'])`. Extra sinks (file, HTTP) go in `configureAppLogging({ sinks })`.
 
-- **Mobile:** `__DEV__` → DEBUG, else INFO. Metro / Xcode stdout only.
-- **Web:** `import.meta.env.DEV` → DEBUG. Devtools console.
-- **Server:** `NODE_ENV !== 'production'` → DEBUG + pretty; production is JSON. Override with `LOG_LEVEL`.
+- **Mobile:** `__DEV__` → debug. Metro / Xcode console.
+- **Web:** `import.meta.env.DEV` → debug. Devtools console.
+- **Server:** `LOG_LEVEL`; JSON when `NODE_ENV=production` or `LOG_FORMAT=json`. ANSI pretty otherwise.
+- **Mobile:** ANSI in Metro (not Chrome `%c` — RN prints CSS as text).
 
-Do not put location, check-ins, or other per-user RLS data in log fields. Default mask covers tokens / passwords / cookies.
-
-Later: rotating on-device files, offline upload queue, backend ingest with admin opt-out and user verbosity. Attach those as tslog transports; do not grow the factory until then.
+Do not put location, check-ins, or other per-user RLS data in log fields.
 
 ## Decisions that are *not* needed yet
 

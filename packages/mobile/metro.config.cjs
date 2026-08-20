@@ -9,6 +9,8 @@ config.transformer = {
   babelTransformerPath: require.resolve('@lingui/metro-transformer/expo'),
 };
 config.resolver.sourceExts.push('sql', 'po', 'pot');
+// Bundle target is Hermes, not the Bun process that runs Metro.
+config.resolver.unstable_conditionNames = ['react-native', 'browser', 'require'];
 config.resolver.assetExts.push('wasm');
 config.server.enhanceMiddleware = middleware => (req, res, next) => {
   res.setHeader('Cross-Origin-Embedder-Policy', 'credentialless');

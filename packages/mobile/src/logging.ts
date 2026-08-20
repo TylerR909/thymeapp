@@ -1,7 +1,9 @@
-import { createLogger } from '@thymeapp/logging';
+import { APP_CATEGORY, configureAppLogging, defaultLowestLevel, getLogger } from '@thymeapp/logging';
 
-/** Stdout only for now (Metro / Xcode). Disk + remote queue come later. */
-export const log = createLogger({
-  name: 'mobile',
-  isDev: __DEV__,
+configureAppLogging({
+  lowestLevel: defaultLowestLevel(__DEV__),
+  consoleStyle: 'ansi',
 });
+
+/** Console sink for now. File rotation + upload are extra sinks later. */
+export const log = getLogger([APP_CATEGORY, 'mobile']);

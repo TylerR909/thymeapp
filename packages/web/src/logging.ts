@@ -1,7 +1,8 @@
-import { createLogger } from '@thymeapp/logging';
+import { APP_CATEGORY, configureAppLogging, defaultLowestLevel, getLogger } from '@thymeapp/logging';
 
-/** Devtools console. Remote upload is a later attachTransport. */
-export const log = createLogger({
-  name: 'web',
-  isDev: import.meta.env.DEV,
+configureAppLogging({
+  lowestLevel: defaultLowestLevel(import.meta.env.DEV),
+  consoleStyle: 'devtools',
 });
+
+export const log = getLogger([APP_CATEGORY, 'web']);

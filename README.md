@@ -14,7 +14,7 @@ Licensed under the [GNU Affero General Public License v3.0](LICENSE).
 - **`packages/mobile/`** — Expo SDK 57 app
 - **`packages/web/`** — Vite admin + history browser (scaffold)
 - **`packages/server/`** — Bun + Elysia stub. Local Postgres via Compose. Release image also serves the web UI.
-- **`packages/logging/`** — tslog factory (stdout now; disk/remote later)
+- **`packages/logging/`** — LogTape (`configureAppLogging` + `getLogger`)
 - **`packages/core/`**, **`packages/components/`**, **`packages/types/`** — shared code
 
 ## Quick start (host)

@@ -1,17 +1,12 @@
-import { createLogger, parseLogLevel } from '@thymeapp/logging';
+import { APP_CATEGORY, configureAppLogging, defaultLowestLevel, getLogger, tryParseLogLevel } from '@thymeapp/logging';
 
 const isProd = process.env.NODE_ENV === 'production';
+const format = process.env.LOG_FORMAT;
+const json = format === 'json' || (format !== 'pretty' && format !== 'text' && isProd);
 
-const resolveType = (): 'pretty' | 'json' => {
-  const format = process.env.LOG_FORMAT;
-  if (format === 'json') return 'json';
-  if (format === 'pretty' || format === 'text') return 'pretty';
-  return isProd ? 'json' : 'pretty';
-};
-
-export const log = createLogger({
-  name: 'server',
-  isDev: !isProd,
-  minLevel: parseLogLevel(process.env.LOG_LEVEL) ?? parseLogLevel(process.env.TSLOG_LEVEL),
-  type: resolveType(),
+configureAppLogging({
+  lowestLevel: tryParseLogLevel(process.env.LOG_LEVEL) ?? defaultLowestLevel(!isProd),
+  consoleStyle: json ? 'json' : 'ansi',
 });
+
+export const log = getLogger([APP_CATEGORY, 'server']);

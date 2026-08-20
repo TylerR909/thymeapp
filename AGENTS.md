@@ -10,4 +10,4 @@ Product language:
 
 If a task mentions Swarm, Lifecycle, check-ins, recaps, slices, stickers, mayorships, or “open after months and it still knows,” read those files first.
 
-Root `bun start` is Docker Compose (postgres + server + web). Mobile is **host** `cd packages/mobile && bun run ios` (development build, not Expo Go). `bun start` is Metro only; `i` opens the installed client. Do not commit `ios/` or `android/` (CNG). User-facing strings go through Lingui (`<Trans>` / `t\`...\``), then `bun run i18n:extract`. Logging is `@thymeapp/logging` (`createLogger`); that package must not import other `@thymeapp/*` packages. Do not log RLS-private user data.
+Root `bun start` is Docker Compose (postgres + server + web). Mobile is **host** `cd packages/mobile && bun run ios` (development build, not Expo Go). `bun start` is Metro only; `i` opens the installed client. Do not commit `ios/` or `android/` (CNG). User-facing strings go through Lingui (`<Trans>` / `t\`...\``), then `bun run i18n:extract`. Logging is `@thymeapp/logging` (`configureAppLogging` + `getLogger`). That package must not import other `@thymeapp/*` packages. Do not log RLS-private user data.

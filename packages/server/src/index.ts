@@ -18,16 +18,13 @@ if (webRoot !== undefined && webRoot !== '') {
 
 app.listen({ hostname: '0.0.0.0', port });
 
-log.info(
-  {
-    host: app.server?.hostname ?? '0.0.0.0',
-    port: app.server?.port ?? port,
-    webRoot: webRoot ?? null,
-    db: {
-      host: process.env.DB_HOST ?? null,
-      port: process.env.DB_PORT ?? null,
-      database: process.env.DB_DATABASE ?? null,
-    },
+log.info('ThymeApp server listening', {
+  host: app.server?.hostname ?? '0.0.0.0',
+  port: app.server?.port ?? port,
+  webRoot: webRoot ?? null,
+  db: {
+    host: process.env.DB_HOST ?? null,
+    port: process.env.DB_PORT ?? null,
+    database: process.env.DB_DATABASE ?? null,
   },
-  'ThymeApp server listening',
-);
+});

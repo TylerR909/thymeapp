@@ -135,4 +135,4 @@ If a proposed library does not participate in that loop, it is a hard sell.
 
 ## What this does *not* change today
 
-Do not add Joist, PowerSync, TanStack, NativeWind, or Eden unless the task is that pass. Mobile Lingui, EAS / Xcode, tslog, and the Compose/Postgres shape are already in. The rest of the running stack stays: Expo Router, Drizzle/SQLite, Vite scaffold, Elysia `/health`, Bun workspaces, Jest on mobile, `bun test` on core/web.
+Do not add Joist, PowerSync, TanStack, NativeWind, or Eden unless the task is that pass. Mobile Lingui, EAS / Xcode, LogTape, and the Compose/Postgres shape are already in. The rest of the running stack stays: Expo Router, Drizzle/SQLite, Vite scaffold, Elysia `/health`, Bun workspaces, Jest on mobile, `bun test` on core/web.
