@@ -1,5 +1,6 @@
-import { Elysia } from 'elysia';
+// organize-imports-ignore — configure LogTape before any other app module
 import { log } from './log';
+import { Elysia } from 'elysia';
 
 const port = Number(process.env.PORT ?? 3000);
 const webRoot = process.env.WEB_ROOT;
@@ -18,7 +19,7 @@ if (webRoot !== undefined && webRoot !== '') {
 
 app.listen({ hostname: '0.0.0.0', port });
 
-log.info('ThymeApp server listening', {
+log.info('ThymeApp server listening on {host}:{port}', {
   host: app.server?.hostname ?? '0.0.0.0',
   port: app.server?.port ?? port,
   webRoot: webRoot ?? null,

@@ -13,6 +13,9 @@
         "projectId": "43103bb3-73ff-45dc-942c-da48c97d1c56"
       }
     },
+    "experiments": {
+      "reactCompiler": true
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.tylerr909.thymeapp",

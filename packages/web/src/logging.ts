@@ -1,8 +1,7 @@
-import { APP_CATEGORY, configureAppLogging, defaultLowestLevel, getLogger } from '@thymeapp/logging';
+import { createLogger, defaultLowestLevel } from '@thymeapp/logging';
 
-configureAppLogging({
+export const log = createLogger({
+  name: 'web',
   lowestLevel: defaultLowestLevel(import.meta.env.DEV),
   consoleStyle: 'devtools',
 });
-
-export const log = getLogger([APP_CATEGORY, 'web']);

@@ -1,25 +1,26 @@
 # Tooling and layout
 
-Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md). Non-binding future stack: [`ROADMAP.md`](./ROADMAP.md).
+Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md). Non-binding future stack: [`ROADMAP.md`](./ROADMAP.md). Upgrade locks (Jest 29, TS 6.0, Expo-pinned RN, …): [`DEPENDENCIES.md`](./DEPENDENCIES.md).
 
 ## Stack
 
 | Layer | Choice | Why |
 | --- | --- | --- |
-| Package manager | **Bun 1.3.14** (`.bun-version`) | Workspaces + Elysia runtime. Pin with `.bun-version`; CI reads that file. No nvm-style auto-switch. |
+| Package manager | **Bun 1.4.0** (`.bun-version`) | Workspaces + Elysia runtime. Pin with `.bun-version`; CI reads that file. No nvm-style auto-switch. |
 | Linker | hoisted (`bunfig.toml`) | Isolated is Bun’s modern default, but Expo Doctor still flags same-version native duplicates. |
 | Node | **>=22.13** (`.node-version` = 24) | Expo 57 minimum. |
-| Language | **TypeScript ~6.0.3** | Expo / typescript-eslint pin `<6.1`. Do not move to 7 until 7.1. |
-| Mobile | **Expo SDK 57 + Expo Router** | RN 0.86, React 19.2. Development builds (`expo-dev-client`), not Expo Go. |
+| Language | **TypeScript ~6.0.3** | Latest 6.0.x. `typescript-eslint` is `<6.1.0`. Do not move to 7 until 7.1. |
+| Mobile | **Expo SDK 57 + Expo Router** | RN 0.86, React 19.2. Development builds (`expo-dev-client`), not Expo Go. React Compiler on (`experiments.reactCompiler`). |
 | Mobile i18n | **Lingui 6** | Catalogs in `packages/mobile/src/locales`. Web Lingui is still later. |
 | Device builds | **Local Xcode (7-day) + EAS project** | EAS project `43103bb3-73ff-45dc-942c-da48c97d1c56`. Cloud iOS device builds need a paid Apple Developer Program membership. |
 | Mobile data | **SQLite + Drizzle 0.45** | Latest stable. Drizzle 1.0 is beta. |
-| Web | **Vite + React 19** | Admin + history browser. Scaffold only. |
+| Web | **Vite 8 + React 19** | Admin + history browser. Scaffold only. React Compiler via `reactCompilerPreset()`. |
 | Server | **Bun + Elysia 1.4** | Stub + `/health`. Local run is Compose (`bun start`). Elysia 2 is beta. |
 | Postgres | **18** (Compose) | One instance, `thymeapp` + `thymeapp_tests_*`. Host ports are ephemeral (`bun urls`). See [`LOCAL-DB.md`](./LOCAL-DB.md). |
-| Tests | **`bun test`** (core, web) + **Jest / jest-expo** (mobile) | Bun cannot load React Native. `bun test` from root ignores `packages/mobile`. |
+| Tests | **Jest 29** (`jest-expo` on mobile) | One runner for mobile, web, server, and shared packages. Bun cannot load React Native, so we do not use `bun test`. Jest 30 waits on `jest-expo`. |
+| Lint | **ESLint 10** | 9 is EOL. `eslint-plugin-react` and `eslint-plugin-react-native` still call removed ESLint 9 context methods; `@eslint/compat` shims them. |
 | Hooks | **Lefthook** | Staged ESLint + type-check + Jest. |
-| Logging | **LogTape** via `@thymeapp/logging` | `configureAppLogging` + `getLogger`. Console now; extra sinks later. |
+| Logging | **LogTape** via `@thymeapp/logging` | `createLogger({ name })` — redacted console. Unit tests intercept in memory (`toHaveLogged`). |
 | License | **AGPL-3.0-only** | Self-hosted network app. |
 
 ## Commands
@@ -34,8 +35,7 @@ bun urls           # host ports Docker assigned
 bun start:mobile   # host Expo / Metro
 bun db             # postgres up --wait
 bun precheck       # type-check + lint
-bun test           # core + web
-cd packages/mobile && bun run test   # jest-expo
+bun run test       # Jest: core, logging, server, web, mobile
 ```
 
 Root `start` is Docker Compose. It is not `expo run:ios`. Mobile is still host-only. Full story: [`LOCAL-DB.md`](./LOCAL-DB.md).
@@ -99,6 +99,7 @@ docker-compose.yaml             Local postgres + server + web (Compose finds thi
 docker-compose.example.yml      Self-host copy-paste (Postgres + one app image)
 Dockerfile               Release: API + web UI
 docs/LOCAL-DB.md         Compose / Postgres / later Joist
+docs/DEPENDENCIES.md     Why we are not on the next Jest / TS / RN / …
 docs/references      Swarm / Lifecycle recaps
 ```
 
@@ -106,7 +107,9 @@ Shared `tsconfig.json` and ESLint style live at the repo root. Packages only add
 
 ### Logging
 
-`@thymeapp/logging` is a leaf: ESLint forbids it from importing other `@thymeapp/*` packages. Apps call `configureAppLogging` once, then `getLogger(['thymeapp', 'server' | 'web' | 'mobile'])`. Extra sinks (file, HTTP) go in `configureAppLogging({ sinks })`.
+`@thymeapp/logging` is a leaf: ESLint forbids it from importing other `@thymeapp/*` packages. Apps call `createLogger({ name, lowestLevel, consoleStyle })` **once per process** (later calls only `getLogger` for that name). Extra sinks go in the first `createLogger({ sinks })`.
+
+**Unit tests:** do not mock `Logger`. Root `jest.config.cjs` runs every package. `test/setupTests.ts` registers `toHaveLogged` and clears intercepted records after each test — you do not `expect.extend` in test files. Jest sets `JEST_WORKER_ID` (and `NODE_ENV=test`); `createLogger` then skips the real console and extra file/HTTP sinks and keeps records in memory. Assert with `expect().toHaveLogged('...')` (the value passed to `expect` is optional and ignored). `enableLogging()` prints intercepted records for that test or suite when you are debugging a failure. If those worker flags are also set in a production-like process (`NODE_ENV=production` or React Native `__DEV__ === false`), `createLogger` throws — swallowing production logs would hide outages.
 
 - **Mobile:** `__DEV__` → debug. Metro / Xcode console.
 - **Web:** `import.meta.env.DEV` → debug. Devtools console.

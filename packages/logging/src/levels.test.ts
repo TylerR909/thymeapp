@@ -1,4 +1,3 @@
-import { expect, test } from 'bun:test';
 import { defaultLowestLevel, tryParseLogLevel } from './levels';
 
 test('tryParseLogLevel accepts names case-insensitively', () => {

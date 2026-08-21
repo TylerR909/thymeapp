@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
-    "test": "bun test",
+    "test": "jest",
     "precheck": "bun run type-check && bun run lint"
   },
   "dependencies": {

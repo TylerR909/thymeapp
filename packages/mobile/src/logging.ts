@@ -1,9 +1,7 @@
-import { APP_CATEGORY, configureAppLogging, defaultLowestLevel, getLogger } from '@thymeapp/logging';
+import { createLogger, defaultLowestLevel } from '@thymeapp/logging';
 
-configureAppLogging({
+export const log = createLogger({
+  name: 'mobile',
   lowestLevel: defaultLowestLevel(__DEV__),
   consoleStyle: 'ansi',
 });
-
-/** Console sink for now. File rotation + upload are extra sinks later. */
-export const log = getLogger([APP_CATEGORY, 'mobile']);

@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
-    "test": "bun test",
+    "test": "jest",
     "precheck": "bun run type-check && bun run lint",
     "smoke": "bun run build"
   },
@@ -22,11 +22,14 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@testing-library/react": "^16.3.0",
+    "@babel/core": "^7.29.0",
+    "@rolldown/plugin-babel": "^0.2.3",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "~19.2.4",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.0.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "typescript": "~6.0.3",
-    "vite": "^7.1.7"
+    "vite": "^8.2.2"
   }
 }

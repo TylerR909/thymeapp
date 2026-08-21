@@ -1,7 +1,8 @@
+// organize-imports-ignore — configure LogTape before any other app module
+import { log } from './logging';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
-import { log } from './logging';
 
 const root = document.getElementById('root');
 if (!root) {

@@ -1,8 +1,9 @@
+// organize-imports-ignore — configure LogTape before any other app module
+import { log } from '../logging';
 import { I18nProvider, type TransRenderProps } from '@lingui/react';
 import { Stack } from 'expo-router';
 import { Text } from 'react-native';
 import { activateDefaultLocale, i18n } from '../i18n';
-import { log } from '../logging';
 
 activateDefaultLocale();
 log.debug('mobile logger ready');

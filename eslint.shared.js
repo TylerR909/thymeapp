@@ -12,6 +12,8 @@ export const shared = defineConfig(
   {
     ignores: [
       '**/metro.config.cjs',
+      '**/jest.config.cjs',
+      'test/jest.defaults.cjs',
       '**/drizzle/**',
       '**/babel.config.js',
       '**/*.config.js',
@@ -28,6 +30,11 @@ export const shared = defineConfig(
   },
   { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: repoRoot } } },
   { name: 'globals', languageOptions: { globals: { ...globals.es2021 } } },
+  {
+    name: 'jest-globals',
+    files: ['**/*.{test,spec}.{ts,tsx}', 'test/setupTests.ts'],
+    languageOptions: { globals: { ...globals.jest } },
+  },
   { name: 'prettier', plugins: { prettier }, rules: { 'prettier/prettier': ['error', prettierConfig] } },
   tseslint.configs.strictTypeChecked,
   {
