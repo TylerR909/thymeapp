@@ -17,7 +17,7 @@ Licensed under the [GNU Affero General Public License v3.0](LICENSE).
 - **`packages/web/`** — Vite admin + history browser (scaffold)
 - **`packages/server/`** — Bun + Elysia stub. Local Postgres via Compose. Release image also serves the web UI.
 - **`packages/logging/`** — LogTape (`createLogger`, redacted console; unit tests intercept)
-- **`packages/core/`**, **`packages/components/`**, **`packages/types/`** — shared code
+- **`packages/components/`**, **`packages/types/`** — empty until two apps share UI or Zod/DTOs
 
 ## Quick start (host)
 

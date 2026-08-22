@@ -14,7 +14,7 @@ bun psql        # compose exec — no published port needed
 
 Mobile stays on the host (`bun start:mobile`).
 
-Postgres has no app tables. `/health` does not query it.
+Postgres has no app tables. `GET /health` is process liveness. `GET /ready` runs `SELECT 1` against Postgres.
 
 | | |
 | --- | --- |
@@ -40,7 +40,7 @@ Makefile                     # bun start / db / redb / psql / urls
 
 Do not pass `-f` to `docker compose`. Do not set `name:` — the worktree directory is the project name.
 
-`.env` is gitignored. Copy once from `.env.example` in the main checkout. Conductor copies it into new worktrees via [`.worktreeinclude`](../.worktreeinclude). The server container gets `.env` via `env_file:` plus a short `environment:` block for Compose-network facts (`DB_HOST=postgres`).
+`.env` is gitignored. Copy once from `.env.example` in the main checkout. Conductor copies it into new worktrees via [`.worktreeinclude`](../.worktreeinclude). The server container gets credentials from `.env` via `env_file:`. It talks to Postgres at Compose DNS `postgres:5432`, not via `DB_HOST`.
 
 ## Worktrees
 

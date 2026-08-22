@@ -15,7 +15,7 @@ Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md).
 | Device builds | **Local Xcode (7-day) + EAS project** | EAS project `43103bb3-73ff-45dc-942c-da48c97d1c56`. Cloud iOS device builds need a paid Apple Developer Program membership. |
 | Mobile data | **SQLite + Drizzle 0.45** | Latest stable. Drizzle 1.0 is beta. |
 | Web | **Vite 8 + React 19** | Admin + history browser. Scaffold only. React Compiler via `reactCompilerPreset()`. |
-| Server | **Bun + Elysia 1.4** | Stub + `/health`. Local run is Compose (`bun start`). Elysia 2 is beta. |
+| Server | **Bun + Elysia 1.4** | `/health` liveness, `/ready` Postgres `SELECT 1`, `@logtape/elysia` request logs. Local run is Compose (`bun start`). Elysia 2 is beta. |
 | Postgres | **18** (Compose) | One instance, `thymeapp` + `thymeapp_tests_*`. Host ports are ephemeral (`bun urls`). See [`LOCAL-DB.md`](./LOCAL-DB.md). |
 | Tests | **Jest 29** (`jest-expo` on mobile) | One runner for mobile, web, server, and shared packages. Bun cannot load React Native, so we do not use `bun test`. Jest 30 waits on `jest-expo`. |
 | Lint | **ESLint 10** | 9 is EOL. `eslint-plugin-react` and `eslint-plugin-react-native` still call removed ESLint 9 context methods; `@eslint/compat` shims them. |
@@ -92,9 +92,8 @@ packages/mobile      Expo app (host; not in Compose)
 packages/web         Vite admin + history (scaffold; Compose bind-mount)
 packages/server      Elysia stub (Compose bind-mount)
 packages/logging     LogTape configure helper. No `@thymeapp/*` imports.
-packages/core        Shared domain (no platform imports)
-packages/components  Shared UI
-packages/types       Shared types
+packages/components  Empty until a primitive is actually RN and web.
+packages/types       Empty until a Zod/DTO is imported by two apps.
 docker-compose.yaml             Local postgres + server + web (Compose finds this by name)
 docker-compose.example.yml      Self-host copy-paste (Postgres + one app image)
 Dockerfile               Release: API + web UI
@@ -103,7 +102,7 @@ docs/DEPENDENCIES.md     Why we are not on the next Jest / TS / RN / …
 docs/references      Swarm / Lifecycle recaps
 ```
 
-Shared `tsconfig.json` and ESLint style live at the repo root. Packages only add Hermes (`ES2022` + `react-native` conditions), DOM (web), or `types: ["bun"]` (server). React hook rules apply to mobile/web only.
+Shared `tsconfig.json` and ESLint style live at the repo root. Mobile adds `react-native` conditions; web adds DOM; server adds `types: ["bun"]`. React hook rules apply to mobile/web only.
 
 ### Logging
 

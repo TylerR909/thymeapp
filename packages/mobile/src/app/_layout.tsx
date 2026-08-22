@@ -1,4 +1,5 @@
-// organize-imports-ignore — configure LogTape before any other app module
+// organize-imports-ignore — Temporal polyfill, then LogTape, then the app
+import 'temporal-polyfill/global';
 import { log } from '../logging';
 import { I18nProvider, type TransRenderProps } from '@lingui/react';
 import { Stack } from 'expo-router';

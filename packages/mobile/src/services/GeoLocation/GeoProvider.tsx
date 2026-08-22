@@ -54,8 +54,8 @@ export const GeoProvider = ({ children }: React.PropsWithChildren) => {
         : <>
             <Text>{numPings.data[0]?.count} total pings</Text>
             <Text>
-              Location at {new Date(timestamp).toLocaleTimeString()} was {coords?.latitude} {coords?.longitude} (
-              {coords?.accuracy})
+              Location at {Temporal.Instant.fromEpochMilliseconds(timestamp).toLocaleString()} was {coords?.latitude}{' '}
+              {coords?.longitude} ({coords?.accuracy})
             </Text>
           </>
         }

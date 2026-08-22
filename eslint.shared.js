@@ -49,6 +49,13 @@ export const shared = defineConfig(
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/prefer-regexp-exec': 'warn',
+      'no-restricted-globals': [
+        'error',
+        {
+          name: 'Date',
+          message: 'Use Temporal (PlainDate, Instant, ZonedDateTime), not Date.',
+        },
+      ],
     },
   },
 );

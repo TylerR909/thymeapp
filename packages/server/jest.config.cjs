@@ -3,6 +3,6 @@ const defaults = require('../../test/jest.defaults.cjs');
 /** @type {import('jest').Config} */
 module.exports = {
   ...defaults,
-  displayName: 'server',
+  displayName: { name: 'server', color: 'yellow' },
   testMatch: ['<rootDir>/packages/server/**/*.test.ts'],
 };

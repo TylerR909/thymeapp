@@ -22,7 +22,7 @@ We already flattened to `packages/*` (not `apps/*`). Keep that. Suggested *roles
 | `packages/mobile` | Expo Router app. Local SQLite + Drizzle is already the start. PowerSync + TanStack Query come later. |
 | `packages/web` | Vite shell today. Target: TanStack Router + Query + Tailwind, Eden client. |
 | `packages/server` | Elysia stub today. Target: thin handlers over **Joist** entities. Postgres 18 is already pinned in Compose. |
-| `packages/types` / `packages/core` | Grow into shared Zod + domain types + API contract helpers. |
+| `packages/types` | Shared Zod / domain types when two apps import them. |
 | `packages/components` | Tokens / primitives. Prefer NativeWind + Tailwind over Tamagui unless that pairing fails. |
 
 Elysia was already in the original boilerplate. This roadmap *keeps* it as transport and adds Joist above it. It does not start a framework bake-off.

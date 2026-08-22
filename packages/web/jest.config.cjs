@@ -3,7 +3,7 @@ const defaults = require('../../test/jest.defaults.cjs');
 /** @type {import('jest').Config} */
 module.exports = {
   ...defaults,
-  displayName: 'web',
+  displayName: { name: 'web', color: 'cyan' },
   testEnvironment: 'jsdom',
   testMatch: [
     '<rootDir>/packages/web/**/*.test.ts',

@@ -3,11 +3,11 @@ const path = require('node:path');
 const repoRoot = path.join(__dirname, '..');
 
 /**
- * Shared Jest project defaults for packages that are not mobile.
+ * Shared Jest defaults for everything except mobile.
+ * Mobile uses `jest-expo` + `babel-preset-expo` and does not load this file.
  *
  * `testEnvironment: 'node'` is Jest's name for the non-DOM environment
- * (vs `jsdom` on web, `jest-expo` on mobile). Tests still run through
- * `bun run test`. `node:path` is the Node builtin specifier; Bun implements it.
+ * (web overrides to `jsdom`). Tests still run through `bun run test`.
  *
  * @type {import('jest').Config}
  */
@@ -17,21 +17,16 @@ module.exports = {
   setupFiles: ['<rootDir>/test/textEncoderPolyfill.ts'],
   setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
   transform: {
-    '^.+\\.tsx?$': [
-      'ts-jest',
+    '^.+\\.(t|j)sx?$': [
+      '@swc/jest',
       {
-        diagnostics: false,
-        tsconfig: {
-          module: 'commonjs',
-          esModuleInterop: true,
-          isolatedModules: true,
-          strict: true,
-          skipLibCheck: true,
-          jsx: 'react-jsx',
-          target: 'ES2022',
+        jsc: {
+          parser: { syntax: 'typescript', tsx: true },
+          transform: { react: { runtime: 'automatic' } },
         },
+        module: { type: 'commonjs' },
       },
     ],
   },
-  transformIgnorePatterns: ['/node_modules/(?!(@thymeapp)/)'],
+  transformIgnorePatterns: ['/node_modules/(?!(@thymeapp|temporal-polyfill|temporal-spec|temporal-utils)/)'],
 };

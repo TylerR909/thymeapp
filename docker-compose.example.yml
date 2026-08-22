@@ -34,8 +34,6 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: '5432'
       WEB_ROOT: /app/web
       NODE_ENV: production
     ports:

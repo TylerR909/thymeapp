@@ -32,6 +32,8 @@
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
     "@eslint/js": "^10.0.1",
+    "@swc/core": "^1.16.1",
+    "@swc/jest": "^0.2.39",
     "@types/bun": "^1.4.0",
     "@types/jest": "^29.5.14",
     "eslint": "^10.8.1",
@@ -46,7 +48,7 @@
     "lefthook": "^2.1.10",
     "prettier": "^3.9.6",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "ts-jest": "^29.4.12",
+    "temporal-polyfill": "^1.0.4",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.67.0"
   },
