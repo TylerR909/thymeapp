@@ -1,6 +1,6 @@
 # Release artifact: API + built web UI in one image.
 # Local `bun start` does not use this — Compose bind-mounts oven/bun instead.
-FROM oven/bun:1.3.14-debian AS build
+FROM oven/bun:1.4.0-debian AS build
 WORKDIR /app
 COPY package.json bun.lock bunfig.toml ./
 COPY packages/web/package.json packages/web/
@@ -18,7 +18,7 @@ COPY packages/types packages/types
 COPY packages/components packages/components
 RUN bun --filter @thymeapp/web build
 
-FROM oven/bun:1.3.14-debian
+FROM oven/bun:1.4.0-debian
 WORKDIR /app
 ENV NODE_ENV=production WEB_ROOT=/app/web
 COPY --from=build /app/node_modules ./node_modules
