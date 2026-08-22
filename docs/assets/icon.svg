@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-label="Thyme pin with leaf cluster">
+  
+  <path fill="#1ceb68" d="M50 4.5
+    C26.5 4.5 10 23 10 43
+    C10 64.5 50 96 50 96
+    C50 96 90 64.5 90 43
+    C90 23 73.5 4.5 50 4.5Z"></path>
+  
+  
+  <path fill="#ffffff" d="M50 64
+    C39 51 37 29 50 16
+    C63 29 61 51 50 64Z"></path>
+  
+  <path fill="#ffffff" d="M30 53
+    C20 46 17 31 26 20
+    C37 27 44 41 30 53Z"></path>
+  
+  <path fill="#ffffff" d="M70 53
+    C80 46 83 31 74 20
+    C63 27 56 41 70 53Z"></path>
+</svg>

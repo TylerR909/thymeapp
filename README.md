@@ -1,5 +1,7 @@
 # ThymeApp
 
+<img src="docs/assets/icon.png" alt="ThymeApp icon: a map pin with a thyme sprig" width="96" height="96" />
+
 Self-hosted location tracking: [Foursquare Swarm](docs/references/swarm.md)–style check-ins plus [Life Cycle](docs/references/lifecycle.md)–style recaps. See [docs/references](docs/references/README.md), [docs/TOOLING.md](docs/TOOLING.md) (what runs today), and [docs/ROADMAP.md](docs/ROADMAP.md) (non-binding future stack).
 
 Licensed under the [GNU Affero General Public License v3.0](LICENSE).
