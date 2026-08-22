@@ -1,12 +1,15 @@
 # @thymeapp/mobile
 
-On the **Mac host**:
+On the **Mac host** (development build, not Expo Go):
 
 ```bash
-cd packages/mobile
-bun start
+bun run ios                 # Simulator: compile, install, Metro
+bun run ios -- --device     # iPhone
+bun start                   # later: Metro only, then `i`
 ```
 
-Then press `i` for the iOS Simulator. That is Metro + Expo Go for SDK 57, not `expo run:ios`.
+There is no committed `ios/*.xcodeproj`. `bunx expo prebuild` generates it; `xed ios` opens the workspace. See [`docs/TOOLING.md`](../../docs/TOOLING.md).
 
-For a physical iPhone, App Store Expo Go is SDK 54 and will not open this app. Install an SDK 57 Expo Go from [expo.dev/go](https://expo.dev/go) or [sign.expo.dev](https://sign.expo.dev/), copy `.env.example` to `.env.local`, and set `REACT_NATIVE_PACKAGER_HOSTNAME` to the Mac LAN IP.
+Physical device on LAN: gitignored `.env.local` with `REACT_NATIVE_PACKAGER_HOSTNAME=<Mac LAN IP>`. Simulator does not need that file.
+
+User-facing strings: wrap with Lingui (`<Trans>` / `t\`...\``) and run `bun run i18n:extract`.

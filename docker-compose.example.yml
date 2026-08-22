@@ -1,0 +1,44 @@
+# Self-host example. Copy to docker-compose.yaml next to a `.env`.
+# Images are the contract; CI does not publish them yet.
+#
+# .env:
+#   DB_USER=thymeapp
+#   DB_PASSWORD=
+#   DB_DATABASE=thymeapp
+#   SERVER_PORT=3000
+#   THYMEAPP_TAG=latest
+#   LOG_LEVEL=INFO
+#   LOG_FORMAT=json
+
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -h 127.0.0.1']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  app:
+    image: ghcr.io/tylerr909/thymeapp:${THYMEAPP_TAG}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      WEB_ROOT: /app/web
+      NODE_ENV: production
+    ports:
+      - ${SERVER_PORT}:3000
+    restart: unless-stopped
+
+volumes:
+  pg:

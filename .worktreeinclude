@@ -1,0 +1,5 @@
+# Gitignored files to copy into new worktrees.
+# Conductor, Claude Code, and git-worktreeinclude all read this.
+# Adding this file replaces Conductor's default `.env*` pattern, so list env files here.
+.env
+.env.local

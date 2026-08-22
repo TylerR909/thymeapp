@@ -12,6 +12,8 @@ export const shared = defineConfig(
   {
     ignores: [
       '**/metro.config.cjs',
+      '**/jest.config.cjs',
+      'test/jest.defaults.cjs',
       '**/drizzle/**',
       '**/babel.config.js',
       '**/*.config.js',
@@ -21,11 +23,18 @@ export const shared = defineConfig(
       '**/dist/**',
       '**/.expo/**',
       '**/expo-env.d.ts',
+      '**/ios/**',
+      '**/android/**',
       'scripts/**',
     ],
   },
   { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: repoRoot } } },
   { name: 'globals', languageOptions: { globals: { ...globals.es2021 } } },
+  {
+    name: 'jest-globals',
+    files: ['**/*.{test,spec}.{ts,tsx}', 'test/setupTests.ts'],
+    languageOptions: { globals: { ...globals.jest } },
+  },
   { name: 'prettier', plugins: { prettier }, rules: { 'prettier/prettier': ['error', prettierConfig] } },
   tseslint.configs.strictTypeChecked,
   {
@@ -40,6 +49,13 @@ export const shared = defineConfig(
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/prefer-regexp-exec': 'warn',
+      'no-restricted-globals': [
+        'error',
+        {
+          name: 'Date',
+          message: 'Use Temporal (PlainDate, Instant, ZonedDateTime), not Date.',
+        },
+      ],
     },
   },
 );

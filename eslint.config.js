@@ -12,4 +12,21 @@ export default defineConfig(
     ...reactNativeConfig,
     files: ['packages/mobile/**/*.{js,jsx,ts,tsx}'],
   },
+  {
+    name: 'logging-isolation',
+    files: ['packages/logging/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@thymeapp/*', '**/packages/*'],
+              message: '@thymeapp/logging must not import other workspace packages.',
+            },
+          ],
+        },
+      ],
+    },
+  },
 );

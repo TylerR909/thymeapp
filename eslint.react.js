@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
@@ -5,7 +6,11 @@ import reactNative from 'eslint-plugin-react-native';
 export const reactConfig = {
   name: 'react',
   files: ['**/*.{jsx,tsx}'],
-  plugins: { react, 'react-hooks': reactHooks },
+  plugins: {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- plugin still calls removed ESLint 9 context methods
+    react: fixupPluginRules(react),
+    'react-hooks': reactHooks,
+  },
   settings: { react: { version: 'detect' } },
   rules: {
     ...react.configs.recommended.rules,
@@ -27,8 +32,8 @@ export const reactNativeConfig = {
   name: 'react-native',
   files: ['**/*.{js,jsx,ts,tsx}'],
   plugins: {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    'react-native': reactNative,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- plugin still calls removed ESLint 9 context methods
+    'react-native': fixupPluginRules(reactNative),
   },
   rules: {
     'react-native/no-unused-styles': 'error',

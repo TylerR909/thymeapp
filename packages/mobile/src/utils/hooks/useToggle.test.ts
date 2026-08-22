@@ -1,4 +1,3 @@
-/// <reference types="jest" />
 import { act, renderHook } from '@testing-library/react-native';
 import { useToggle } from './useToggle';
 

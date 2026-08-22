@@ -2,5 +2,6 @@
 linker = "hoisted"
 
 [test]
-preload = ["./packages/web/test/setup.ts"]
-pathIgnorePatterns = ["packages/mobile/**"]
+# Jest is the test runner (`bun run test`). Ignore everything so `bun test`
+# does not silently run a second, unconfigured suite.
+pathIgnorePatterns = ["**"]

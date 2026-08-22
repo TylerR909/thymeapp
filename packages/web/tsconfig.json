@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": ["bun"]
+    "types": ["bun", "jest"]
   },
+  "include": [".", "../../test/jest-globals.d.ts"],
   "exclude": ["dist"]
 }

@@ -1,0 +1,52 @@
+# Local. Compose loads docker-compose.yaml and `.env` by name.
+# No `name:` — the worktree directory is the project (isolated networks/volumes).
+# Host ports are omitted so Docker picks a free one per stack (`bun urls`).
+# Self-hosters: copy docker-compose.example.yml, not this file.
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    environment:
+      POSTGRES_USER: dbadmin
+      POSTGRES_PASSWORD: thymeapp-admin
+      POSTGRES_DB: postgres
+      APP_DB_USER: ${DB_USER}
+      APP_DB_PASSWORD: ${DB_PASSWORD}
+      TEST_PARALLELISM: ${TEST_PARALLELISM}
+    ports:
+      - '5432'
+    healthcheck:
+      # -h 127.0.0.1: otherwise pg_isready goes green on the unix socket too early.
+      test: ['CMD-SHELL', 'pg_isready -U dbadmin -d postgres -h 127.0.0.1']
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+  server:
+    image: oven/bun:1.4.0
+    working_dir: /app
+    command: bun --hot --inspect=0.0.0.0:9229 packages/server/src/index.ts
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      PORT: '3000'
+      NODE_ENV: development
+    volumes:
+      - .:/app
+    ports:
+      - '3000'
+      - '9229'
+
+  web:
+    image: oven/bun:1.4.0
+    working_dir: /app
+    command: bun --filter @thymeapp/web start -- --host 0.0.0.0 --port 5173
+    volumes:
+      - .:/app
+    ports:
+      - '5173'

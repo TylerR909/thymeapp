@@ -9,10 +9,13 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
+    "test": "jest",
     "precheck": "bun run type-check && bun run lint",
     "smoke": "bun smoke.ts"
   },
   "dependencies": {
+    "@logtape/elysia": "^2.3.2",
+    "@thymeapp/logging": "workspace:*",
     "@thymeapp/types": "workspace:*",
     "elysia": "^1.4.29"
   }

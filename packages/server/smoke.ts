@@ -6,10 +6,10 @@ const child = spawn(process.execPath, ['src/index.ts'], {
   stdio: 'inherit',
 });
 
-const deadline = Date.now() + 8000;
+const deadline = Temporal.Now.instant().add({ milliseconds: 8000 });
 let ready = false;
 
-while (Date.now() < deadline) {
+while (Temporal.Instant.compare(Temporal.Now.instant(), deadline) < 0) {
   try {
     const res = await fetch(`http://127.0.0.1:${String(port)}/health`);
     const body: unknown = await res.json();
