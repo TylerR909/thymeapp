@@ -10,9 +10,10 @@ applyTo: "packages/mobile/**/*"
 > **Key references**: `packages/mobile/src/SCREENS.md` (screens). Swarm/Lifecycle vocabulary: `docs/references/README.md`. Stack: `docs/TOOLING.md`.
 
 ## Tech Stack
-- **Framework**: React Native 0.86 + Expo SDK 57 managed workflow
+- **Framework**: React Native 0.86 + Expo SDK 57 (CNG, development builds)
 - **Navigation**: Expo Router (file-based)
 - **Database**: SQLite + Drizzle ORM
+- **i18n**: Lingui 6 (`src/i18n`, catalogs in `src/locales`)
 - **Styling**: React Native StyleSheet
 
 ## Key Features

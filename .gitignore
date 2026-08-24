@@ -15,12 +15,10 @@ logs
 _.log
 report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
-# dotenv environment variable files
+# dotenv — commit `.env.example`, not `.env`.
 .env
-.env.development.local
-.env.test.local
-.env.production.local
 .env.local
+.env.*.local
 
 # caches
 .eslintcache
@@ -38,6 +36,10 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 dist
 web-build
 expo-env.d.ts
+# CNG native trees. Belong under packages/mobile (already ignored there).
+# Also ignore the repo root — `expo prebuild` from here dumps ios/ android/ at /.
+/ios
+/android
 
 # Conductor machine-local overrides
 .conductor/settings.local.toml
