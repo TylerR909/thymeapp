@@ -48,12 +48,15 @@ Host only. App Store Expo Go is too old for SDK 57; this app uses a **developmen
 cd packages/mobile
 bun run ios              # first time / native changes: compile, install, Metro
 bun start                # JS only; `i` opens the app already on the Simulator
-bun run ios -- --device  # same, plugged-in iPhone
+bun run ios -- --device  # same, plugged-in iPhone (dev client, needs Metro)
+bun run ios:release      # plugged-in iPhone, embedded JS, no Metro
 ```
 
 `i` never compiles. If you see “No development build is installed,” run `bun run ios` (or `-- --device`) once.
 
-Xcode is optional: Product → Run is Debug (Metro); Product → Profile is Release (no Metro). Team `R5DTQ834DF` is Personal Team (7-day). `ios.buildReactNativeFromSource` is on so `expo run:ios` can link `expo-dev-launcher` against RN 0.86’s prebuilt Core (Xcode GUI often succeeds without that; CLI `xcodebuild` does not).
+Xcode is optional: Product → Run is Debug (Metro); Product → Profile / `bun run ios:release` is Release (no Metro). Team `R5DTQ834DF` is Personal Team (7-day). `ios.buildReactNativeFromSource` is on so `expo run:ios` can link `expo-dev-launcher` against RN 0.86’s prebuilt Core (Xcode GUI often succeeds without that; CLI `xcodebuild` does not).
+
+`REACT_NATIVE_PACKAGER_HOSTNAME` belongs in `packages/mobile/.env.local`, not `.env`. Expo 57 treats it as a per-machine key and throws if it is in a committed-style env file.
 
 Do not edit files under `ios/` by hand. Change `app.json` / config plugins and re-run `bunx expo prebuild --clean`.
 
