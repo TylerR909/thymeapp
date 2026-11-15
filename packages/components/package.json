@@ -13,6 +13,6 @@
     "precheck": "bun run type-check && bun run lint"
   },
   "peerDependencies": {
-    "react": "19.2.3"
+    "react": "19.3.0"
   }
 }
