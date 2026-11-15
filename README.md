@@ -8,12 +8,11 @@ Licensed under the [GNU Affero General Public License v3.0](LICENSE).
 
 ## Requirements
 
-- **Bun** `1.4.0` (see `.bun-version`). Upgrade with `bun upgrade`.
-- **Node.js** 22.13+ (24 recommended; see `.node-version`)
+- **Bun** `1.4.4` and **Node.js** 26 (Active LTS) via [`mise.toml`](mise.toml) (`mise install`). CI uses the same file through `jdx/mise-action`.
 
 ## Layout
 
-- **`packages/mobile/`** — Expo SDK 57 app
+- **`packages/mobile/`** — Expo SDK 58 app
 - **`packages/web/`** — Vite admin + history browser (scaffold)
 - **`packages/server/`** — Bun + Elysia stub. Local Postgres via Compose. Release image also serves the web UI.
 - **`packages/logging/`** — LogTape (`createLogger`, redacted console; unit tests intercept)

@@ -1,0 +1,4 @@
+# Single source of truth for Bun and Node. CI installs via jdx/mise-action.
+[tools]
+bun = "1.4.4"
+node = "26"

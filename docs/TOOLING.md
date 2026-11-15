@@ -1,23 +1,23 @@
 # Tooling and layout
 
-Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md). Non-binding future stack: [`ROADMAP.md`](./ROADMAP.md). Upgrade locks (Jest 29, TS 6.0, Expo-pinned RN, …): [`DEPENDENCIES.md`](./DEPENDENCIES.md).
+Product vocabulary (Swarm / Lifecycle): [`references/`](./references/README.md). Non-binding future stack: [`ROADMAP.md`](./ROADMAP.md). Upgrade locks (TS 6.0, Elysia 1.4, Drizzle 0.45, …): [`DEPENDENCIES.md`](./DEPENDENCIES.md).
 
 ## Stack
 
 | Layer | Choice | Why |
 | --- | --- | --- |
-| Package manager | **Bun 1.4.0** (`.bun-version`) | Workspaces + Elysia runtime. Pin with `.bun-version`; CI reads that file. No nvm-style auto-switch. |
+| Package manager | **Bun 1.4.4** (`mise.toml`) | Workspaces + Elysia runtime. Pin via [mise](https://mise.jdx.dev); CI uses `jdx/mise-action`. |
 | Linker | hoisted (`bunfig.toml`) | Isolated is Bun’s modern default, but Expo Doctor still flags same-version native duplicates. |
-| Node | **>=22.13** (`.node-version` = 24) | Expo 57 minimum. |
+| Node | **26 Active LTS** (`mise.toml`) | Expo 58 minimum is 22.13; we pin current LTS. Same mise pin locally and in CI. |
 | Language | **TypeScript ~6.0.3** | Latest 6.0.x. `typescript-eslint` is `<6.1.0`. Do not move to 7 until 7.1. |
-| Mobile | **Expo SDK 57 + Expo Router** | RN 0.86, React 19.2. Development builds (`expo-dev-client`), not Expo Go. React Compiler on (`experiments.reactCompiler`). |
+| Mobile | **Expo SDK 58 + Expo Router** | RN 0.88, React 19.3. Development builds (`expo-dev-client`), not Expo Go. React Compiler on (`experiments.reactCompiler`). RN Strict TypeScript API is default (see SDK 58 notes). |
 | Mobile i18n | **Lingui 6** | Catalogs in `packages/mobile/src/locales`. Web Lingui is still later. |
 | Device builds | **Local Xcode (7-day) + EAS project** | EAS project `43103bb3-73ff-45dc-942c-da48c97d1c56`. Cloud iOS device builds need a paid Apple Developer Program membership. |
 | Mobile data | **SQLite + Drizzle 0.45** | Latest stable. Drizzle 1.0 is beta. |
 | Web | **Vite 8 + React 19** | Admin + history browser. Scaffold only. React Compiler via `reactCompilerPreset()`. |
-| Server | **Bun + Elysia 1.4** | `/health` liveness, `/ready` Postgres `SELECT 1`, `@logtape/elysia` request logs. Local run is Compose (`bun start`). Elysia 2 is beta. |
+| Server | **Bun + Elysia 1.4** | `/health` liveness, `/ready` Postgres `SELECT 1`, `@logtape/elysia` request logs. Local run is Compose (`bun start`). Elysia 2 is still rc. |
 | Postgres | **18** (Compose) | One instance, `thymeapp` + `thymeapp_tests_*`. Host ports are ephemeral (`bun urls`). See [`LOCAL-DB.md`](./LOCAL-DB.md). |
-| Tests | **Jest 29** (`jest-expo` on mobile) | One runner for mobile, web, server, and shared packages. Bun cannot load React Native, so we do not use `bun test`. Jest 30 waits on `jest-expo`. |
+| Tests | **Jest 30** (`jest-expo` on mobile) | One runner for mobile, web, server, and shared packages. Bun cannot load React Native, so we do not use `bun test`. |
 | Lint | **ESLint 10** | 9 is EOL. `eslint-plugin-react` and `eslint-plugin-react-native` still call removed ESLint 9 context methods; `@eslint/compat` shims them. |
 | Hooks | **Lefthook** | Staged ESLint + type-check + Jest. |
 | Logging | **LogTape** via `@thymeapp/logging` | `createLogger({ name })` — redacted console. Unit tests intercept in memory (`toHaveLogged`). |
@@ -42,7 +42,7 @@ Root `start` is Docker Compose. It is not `expo run:ios`. Mobile is still host-o
 
 ## How to run mobile
 
-Host only. App Store Expo Go is too old for SDK 57; this app uses a **development build** (`expo-dev-client`). Same two commands as Expo’s own docs:
+Host only. App Store Expo Go lags the SDK; this app uses a **development build** (`expo-dev-client`). Same two commands as Expo’s own docs:
 
 ```bash
 cd packages/mobile
@@ -54,9 +54,9 @@ bun run ios:release      # plugged-in iPhone, embedded JS, no Metro
 
 `i` never compiles. If you see “No development build is installed,” run `bun run ios` (or `-- --device`) once.
 
-Xcode is optional: Product → Run is Debug (Metro); Product → Profile / `bun run ios:release` is Release (no Metro). Team `R5DTQ834DF` is Personal Team (7-day). `ios.buildReactNativeFromSource` is on so `expo run:ios` can link `expo-dev-launcher` against RN 0.86’s prebuilt Core (Xcode GUI often succeeds without that; CLI `xcodebuild` does not).
+Xcode is optional: Product → Run is Debug (Metro); Product → Profile / `bun run ios:release` is Release (no Metro). Team `R5DTQ834DF` is Personal Team (7-day). `ios.buildReactNativeFromSource` is on so `expo run:ios` can link `expo-dev-launcher` against RN’s prebuilt Core (Xcode GUI often succeeds without that; CLI `xcodebuild` does not). SDK 58 prebuild also emits an iOS **SceneDelegate** for the UIScene life cycle (iOS 27).
 
-`REACT_NATIVE_PACKAGER_HOSTNAME` belongs in `packages/mobile/.env.local`, not `.env`. Expo 57 treats it as a per-machine key and throws if it is in a committed-style env file.
+`REACT_NATIVE_PACKAGER_HOSTNAME` belongs in `packages/mobile/.env.local`, not `.env`. Expo treats it as a per-machine key and throws if it is in a committed-style env file.
 
 Do not edit files under `ios/` by hand. Change `app.json` / config plugins and re-run `bunx expo prebuild --clean`.
 

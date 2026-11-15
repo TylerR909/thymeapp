@@ -31,7 +31,7 @@ Elysia was already in the original boilerplate. This roadmap *keeps* it as trans
 
 | Layer | Selection | Notes |
 | --- | --- | --- |
-| Framework | Expo | Already on SDK 57. |
+| Framework | Expo | Already on SDK 58. |
 | Routing | Expo Router | Already. Typed routes, deep links. |
 | Local DB | Expo SQLite + Drizzle | Already. `useLiveQuery`, bundled migrations. **UI source of truth.** |
 | Sync | PowerSync client SDK | Bidirectional with Postgres. Upload queue hits *our* API, never Postgres directly. Self-hosted PowerSync Service. |
