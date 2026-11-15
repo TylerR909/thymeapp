@@ -59,7 +59,10 @@
             "buildReactNativeFromSource": true
           }
         }
-      ]
+      ],
+      "expo-localization",
+      "expo-sqlite",
+      "expo-status-bar"
     ]
   }
 }

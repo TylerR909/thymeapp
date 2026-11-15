@@ -11,6 +11,6 @@ bun start                   # later: Metro only, then `i`
 
 There is no committed `ios/*.xcodeproj`. `bunx expo prebuild` generates it; `xed ios` opens the workspace. See [`docs/TOOLING.md`](../../docs/TOOLING.md).
 
-`REACT_NATIVE_PACKAGER_HOSTNAME` is a per-machine key. Expo 57 will refuse it in `.env` — put it in gitignored `.env.local`. Simulator does not need that file.
+`REACT_NATIVE_PACKAGER_HOSTNAME` is a per-machine key. Expo will refuse it in `.env` — put it in gitignored `.env.local`. Simulator does not need that file.
 
 User-facing strings: wrap with Lingui (`<Trans>` / `t\`...\``) and run `bun run i18n:extract`.

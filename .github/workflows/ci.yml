@@ -10,12 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: .bun-version
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
+      - uses: jdx/mise-action@v3
       - run: bun install --frozen-lockfile
       - run: bun run type-check
 
@@ -23,12 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: .bun-version
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
+      - uses: jdx/mise-action@v3
       - run: bun install --frozen-lockfile
       - run: bun run lint
 
@@ -36,12 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: .bun-version
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
+      - uses: jdx/mise-action@v3
       - run: bun install --frozen-lockfile
       - run: bun run test
 
@@ -49,11 +34,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: .bun-version
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
+      - uses: jdx/mise-action@v3
       - run: bun install --frozen-lockfile
       - run: bun --filter @thymeapp/mobile i18n:check
