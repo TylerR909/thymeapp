@@ -29,8 +29,8 @@ No named volume locally. `bun redb` drops and recreates the app databases. Self-
 
 ```
 .env.example                 # committed template
-.env                         # gitignored; Conductor copies it into worktrees
-.worktreeinclude             # which gitignored files to copy (`.env`, `.env.local`)
+.env                         # gitignored; the T3 setup action copies it into worktrees
+.worktreeinclude             # which gitignored files to copy (`.env*`)
 docker-compose.yaml          # local: postgres + server + web (bind-mount)
 docker-compose.example.yml   # self-host copy-paste: postgres + one app image
 Dockerfile                   # release: API + Vite build in one image
@@ -40,7 +40,7 @@ Makefile                     # bun start / db / redb / psql / urls
 
 Do not pass `-f` to `docker compose`. Do not set `name:` — the worktree directory is the project name.
 
-`.env` is gitignored. Copy once from `.env.example` in the main checkout. Conductor copies it into new worktrees via [`.worktreeinclude`](../.worktreeinclude). The server container gets credentials from `.env` via `env_file:`. It talks to Postgres at Compose DNS `postgres:5432`, not via `DB_HOST`.
+`.env` is gitignored. Copy once from `.env.example` in the main checkout. The T3 Code setup action ([`t3.json`](../t3.json), `scripts/t3-setup.ts`) copies files matched by [`.worktreeinclude`](../.worktreeinclude) into new worktrees. The server container gets credentials from `.env` via `env_file:`. It talks to Postgres at Compose DNS `postgres:5432`, not via `DB_HOST`.
 
 ## Worktrees
 

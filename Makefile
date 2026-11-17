@@ -1,5 +1,5 @@
 # Recipes only. `docker compose` finds docker-compose.yaml + .env by name.
-# New worktrees get `.env` from Conductor via `.worktreeinclude`.
+# New worktrees get `.env` from the T3 Code setup action via `.worktreeinclude`.
 
 -include .env
 COMPOSE := docker compose

@@ -1,6 +1,6 @@
 # Agent notes
 
-Read [`docs/TOOLING.md`](docs/TOOLING.md) for what runs today. [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md) for why we are not on the next TypeScript / Jest / RN / Elysia / Drizzle. [`docs/ROADMAP.md`](docs/ROADMAP.md) is a **non-binding** future stack (Joist, PowerSync, Eden, etc.) — do not install those unless the task says to. Bun workspaces, not npm/yarn.
+Read [`docs/TOOLING.md`](docs/TOOLING.md) for what runs today. T3 Code actions are in [`t3.json`](t3.json). A new worktree runs `scripts/t3-setup.ts` (`bun install`, then copies `.worktreeinclude` files from `T3CODE_PROJECT_ROOT`). [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md) for why we are not on the next TypeScript / Jest / RN / Elysia / Drizzle. [`docs/ROADMAP.md`](docs/ROADMAP.md) is a **non-binding** future stack (Joist, PowerSync, Eden, etc.) — do not install those unless the task says to. Bun workspaces, not npm/yarn.
 
 Product language:
 

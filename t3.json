@@ -1,0 +1,36 @@
+{
+  "$schema": "https://t3.codes/schema/t3.json",
+  "iconPath": "docs/assets/icon.png",
+  "defaultThreadEnvMode": "worktree",
+  "scripts": [
+    {
+      "name": "Setup",
+      "command": "bun scripts/t3-setup.ts",
+      "icon": "configure",
+      "runOnWorktreeCreate": true,
+      "async": false
+    },
+    {
+      "name": "Stack",
+      "command": "bun start",
+      "icon": "play",
+      "stopOnSettle": true
+    },
+    {
+      "name": "Mobile",
+      "command": "bun scripts/t3-mobile.ts",
+      "icon": "play",
+      "stopOnSettle": true
+    },
+    {
+      "name": "Precheck",
+      "command": "bun run precheck",
+      "icon": "lint"
+    },
+    {
+      "name": "Test",
+      "command": "bun run test",
+      "icon": "test"
+    }
+  ]
+}
