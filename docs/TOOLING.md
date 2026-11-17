@@ -40,6 +40,18 @@ bun run test       # Jest: core, logging, server, web, mobile
 
 Root `start` is Docker Compose. It is not `expo run:ios`. Mobile is still host-only. Full story: [`LOCAL-DB.md`](./LOCAL-DB.md).
 
+## T3 Code
+
+[`t3.json`](../t3.json) replaces Conductor. New threads start in a worktree. Import the actions once from the project's Actions menu (**From t3.json**):
+
+| Action | Command | When |
+| --- | --- | --- |
+| Setup | `bun scripts/t3-setup.ts` | New worktree. `bun install`, then copy files matched by [`.worktreeinclude`](../.worktreeinclude) from the main checkout. The agent waits until it exits. |
+| Stack | `bun start` | Compose: postgres + server + web. Stops when the thread settles. |
+| Mobile | `bun scripts/t3-mobile.ts` | Host Metro. Port is `8081` plus a stable offset of the worktree path, so two threads can both run it. Stops when the thread settles. |
+| Precheck | `bun run precheck` | Type-check, lint, mobile catalog check. |
+| Test | `bun run test` | Jest. |
+
 ## How to run mobile
 
 Host only. App Store Expo Go lags the SDK; this app uses a **development build** (`expo-dev-client`). Same two commands as Expo’s own docs:
